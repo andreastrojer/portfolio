@@ -1,0 +1,43 @@
+/* Keine Tailwind-Basisstile: die würden Framers eigene Styles verändern (1:1-Treue). */
+html, body { margin: 0; padding: 0; background: rgb(228, 231, 237); }
+#root { min-height: 100vh; }
+
+/* Empfohlene Lenis-Styles */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Projektdetail „Der Weg“: auf Desktop größeres Bild (Text 1 : Bild 1,5 statt 1,5 : 1) */
+@media (min-width: 1200px) {
+  [data-framer-name="Approach Wrapper"] > [data-framer-name="Approach"] { flex: 1 0 0px !important; }
+  [data-framer-name="Approach Wrapper"] > :not([data-framer-name="Approach"]) { flex: 1.5 0 0px !important; }
+}
+
+/* Projektdetail „Überblick“ und „Vorgehensweise“: Zeilenumbrüche aus dem CMS-Text anzeigen
+   (z. B. nummerierte Schritte). Texte ohne Umbrüche sehen unverändert aus. */
+[data-framer-name="Approach"] p,
+[data-framer-name="Overview"] p { white-space: pre-line; }
+
+/* Navigation wie im Framer-Layout-Template: fixiert, oben mittig.
+   Desktop: 20 % breit, max. 300 px (1:1 wie Framer).
+   Tablet & Handy: breiter, damit das geöffnete Menü hineinpasst (in Framer nur ~75 px). */
+.nav-shell {
+  position: fixed;
+  top: 24px;
+  left: 49%;
+  transform: translate(-50%);
+  width: 20%;
+  max-width: 300px;
+  z-index: 10;
+}
+@media (max-width: 1199.98px) {
+  .nav-shell { left: 50%; width: calc(100% - 40px); }
+}
+
+/* Geöffnetes Menü auf Tablet & Handy: kleinere Schrift (Desktop unverändert). */
+@media (max-width: 1199.98px) {
+  .nav-shell .framer-styles-preset-ml7vmq { --framer-font-size: 16px !important; --framer-line-height: 1.3em !important; }
+  .nav-shell .framer-styles-preset-3me1a8 { --framer-font-size: 12px !important; }
+  .nav-shell p, .nav-shell .framer-text { overflow-wrap: anywhere; }
+}

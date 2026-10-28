@@ -1,0 +1,35 @@
+import './framer/styles.css'
+
+import PrimaryButton3FramerComponent from './framer/primary-button-3'
+import ProjectCardFramerComponent from './framer/project-card'
+import StatCardFramerComponent from './framer/stat-card'
+import PrimaryButton2FramerComponent from './framer/primary-button-2'
+
+export default function App() {
+  return (
+    <div className='flex flex-col items-center gap-3 bg-[rgb(228,_231,_237)]'>
+      <PrimaryButton3FramerComponent.Responsive
+        DVgymW1UZ={"Alle Projekte →"}
+        S79CLCuIT={false}
+        lcgy4wTv3={"/projects"}
+      />
+      <ProjectCardFramerComponent.Responsive
+        Nqd8qzvj9={"Realisierung einer CMS-basierten, tabletoptimierten Web-App für Außendienst und Kunden."}
+        Uk5rnHhwT={"VKP Conversio Energie GmbH"}
+        ffl2YlgUE={"/projects/:slug"}
+        i_TogqKDX={"Conversio GmbH"}
+        yfWFkpzbi={false}
+      />
+      <StatCardFramerComponent.Responsive
+        Bb9eMbRmD={5}
+        opnlf3xDX={""}
+        qXSYCAFHg={"Jahre Erfahrung"}
+      />
+      <PrimaryButton2FramerComponent.Responsive
+        DVgymW1UZ={"Mein LinkedIn  →"}
+        S79CLCuIT={false}
+        lcgy4wTv3={"/projects"}
+      />
+    </div>
+  );
+};

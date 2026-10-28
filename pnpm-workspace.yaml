@@ -1,0 +1,7 @@
+allowBuilds:
+  esbuild: false
+minimumReleaseAgeExclude:
+  - unframer
+  - react-router
+  - electron-to-chromium
+  - baseline-browser-mapping

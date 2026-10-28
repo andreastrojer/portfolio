@@ -1,0 +1,58 @@
+import './framer/styles.css'
+
+import { UnframerProvider } from 'unframer'
+import { useEffect } from 'react'
+import { navigate, usePathname } from './router'
+
+import Navbar from './framer/navbar'
+import Footer from './framer/footer'
+import PageHome from './framer/page-home'
+import PageProjects from './framer/page-projects'
+import PageContact from './framer/page-contact'
+import Page404 from './framer/page-404'
+import ProjectDetail from './ProjectDetail'
+import { useFitHeadlines } from './fitHeadlines'
+
+const FULL = { style: { width: '100%' } } as const
+
+const TITLES: Record<string, string> = {
+  '/': 'Andreas Trojer',
+  '/projects': 'Projekte – Andreas Trojer',
+  '/contact': 'Kontakt – Andreas Trojer',
+}
+
+function Page({ path }: { path: string }) {
+  if (path === '/') return <PageHome.Responsive {...FULL} />
+  if (path === '/projects') return <PageProjects.Responsive {...FULL} />
+  if (path === '/contact') return <PageContact.Responsive {...FULL} />
+  const m = path.match(/^\/projects\/([^/]+)$/)
+  if (m) return <ProjectDetail slug={decodeURIComponent(m[1])} />
+  return <Page404.Responsive {...FULL} />
+}
+
+export default function App() {
+  const path = usePathname()
+  useFitHeadlines(path)
+  useEffect(() => {
+    document.title = TITLES[path] ?? 'Andreas Trojer'
+  }, [path])
+
+  return (
+    <UnframerProvider navigate={navigate}>
+      {/* Navbar wie im Framer-Layout-Template: fixiert, oben mittig (Maße in index.css) */}
+      <div className="nav-shell">
+        <Navbar.Responsive
+          style={{ width: '100%' }}
+          variants={{ base: 'Tablet & Mobile Closed', xl: 'Desktop / Closed' } as any}
+        />
+      </div>
+      <main style={{ width: '100%' }}>
+        <Page path={path} />
+      </main>
+      <Footer.Responsive
+        style={{ width: '100%' }}
+        variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
+      />
+    </UnframerProvider>
+  )
+}
