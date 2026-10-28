@@ -16,7 +16,7 @@ const SINGLE: [string, number][] = [
   ['[data-framer-name="Headings & Button"] h2', 999], // „Arbeiten“
 ]
 // füllt die verfügbare Breite genau aus (darf auch größer werden)
-const FILL = ['[data-framer-name="Hero Name"] p, [data-framer-name="Hero Name"] h1']
+const FILL: string[] = [] // „ANDREAS TROJER“ passt Framer selbst an die Breite an
 // Gruppen: alle Zeilen bekommen dieselbe (kleinste nötige) Größe
 const GROUPS = ['[data-framer-name="Service Section"] h1, [data-framer-name="Service Section"] h2']
 

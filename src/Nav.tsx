@@ -66,7 +66,6 @@ export default function Nav({ path }: { path: string }) {
       onPointerUpCapture={swallow}
     >
       <Navbar.Responsive
-        key={open ? 'open' : 'closed'}
         style={{ width: '100%' }}
         variants={
           {

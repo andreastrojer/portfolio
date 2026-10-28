@@ -32,17 +32,18 @@ if (touch) {
     },
     true,
   )
-  // Framers Komponente blendet bei touchstart sofort ein – das übernehmen wir oben selbst
-  document.addEventListener(
-    'touchstart',
-    () => {
-      requestAnimationFrame(() => {
-        document.querySelectorAll('a').forEach((a) => {
-          if (a !== armed && a.querySelector('[data-hover-reveal="on"]')) setReveal(a as HTMLAnchorElement, false)
-        })
-      })
-    },
-    { passive: true, capture: true },
-  )
+  // Framers Komponente blendet bei touchstart / (simuliertem) mouseenter sofort ein und
+  // wieder aus – das erzeugte das Ruckeln. Auf Touch-Geräten übernimmt nur noch der Klick oben.
+  const inCard = (t: EventTarget | null) =>
+    !!(t instanceof Element && (t.closest('a') as HTMLElement | null)?.querySelector('[data-hover-reveal]'))
+  for (const type of ['touchstart', 'mouseenter', 'mouseover', 'mouseleave', 'mouseout'] as const) {
+    document.addEventListener(
+      type,
+      (e) => {
+        if (inCard(e.target)) e.stopPropagation()
+      },
+      { capture: true, passive: true },
+    )
+  }
 }
 export {}
