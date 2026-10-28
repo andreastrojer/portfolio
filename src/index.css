@@ -30,8 +30,10 @@ html.lenis, html.lenis body { height: auto; }
   width: 20%;
   max-width: 300px;
   z-index: 1000;
-  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+@media (hover: none) {
+  .nav-shell { cursor: pointer; } /* iPhone: damit Tippen als Klick ankommt */
 }
 @media (max-width: 1199.98px) {
   .nav-shell { left: 50%; width: calc(100% - 40px); }

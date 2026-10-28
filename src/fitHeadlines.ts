@@ -20,6 +20,23 @@ const FILL = ['[data-framer-name="Hero Name"] p, [data-framer-name="Hero Name"] 
 // Gruppen: alle Zeilen bekommen dieselbe (kleinste nötige) Größe
 const GROUPS = ['[data-framer-name="Service Section"] h1, [data-framer-name="Service Section"] h2']
 
+
+// Framer setzt bei manchen Texten (z. B. „ANDREAS TROJER“) die Größe selbst direkt am Element.
+// Diese Originalwerte merken wir uns und stellen sie wieder her – wir löschen sie nie.
+function remember(h: HTMLElement) {
+  if (h.dataset.fitOrig !== undefined) return
+  h.dataset.fitOrig = h.style.getPropertyValue('--framer-font-size')
+  h.dataset.fitOrigPrio = h.style.getPropertyPriority('--framer-font-size')
+  h.dataset.fitOrigWs = h.style.getPropertyValue('white-space')
+}
+function reset(h: HTMLElement) {
+  if (h.dataset.fitOrig === undefined) return // nie von uns verändert → nichts anfassen
+  if (h.dataset.fitOrig) h.style.setProperty('--framer-font-size', h.dataset.fitOrig, h.dataset.fitOrigPrio || '')
+  else h.style.removeProperty('--framer-font-size')
+  if (h.dataset.fitOrigWs) h.style.setProperty('white-space', h.dataset.fitOrigWs)
+  else h.style.removeProperty('white-space')
+}
+
 function availableWidth(h: HTMLElement) {
   // breitester sichtbarer Inhaltsbereich um die Überschrift, nie breiter als der Bildschirm
   let box = h.parentElement
@@ -33,14 +50,14 @@ function availableWidth(h: HTMLElement) {
 }
 
 function neededSize(h: HTMLElement): number | null {
-  h.style.removeProperty('--framer-font-size')
-  h.style.removeProperty('white-space')
+  remember(h)
+  reset(h)
   if (h.getBoundingClientRect().width === 0) return null
   const base = parseFloat(getComputedStyle(h).fontSize)
   const available = availableWidth(h)
   h.style.setProperty('white-space', 'nowrap')
   const needed = h.scrollWidth
-  h.style.removeProperty('white-space')
+  reset(h)
   if (needed <= available) return base
   return Math.max(MIN_SIZE, Math.floor(base * (available / needed) * 0.94))
 }
@@ -53,7 +70,8 @@ function apply(h: HTMLElement, base: number, size: number, max = 999) {
 }
 
 function fill(h: HTMLElement) {
-  h.style.removeProperty('--framer-font-size')
+  remember(h)
+  reset(h)
   h.style.setProperty('white-space', 'nowrap')
   if (h.getBoundingClientRect().width === 0) return
   const base = parseFloat(getComputedStyle(h).fontSize)
@@ -66,20 +84,17 @@ function fit() {
   const phone = window.innerWidth <= PHONE_MAX
   for (const sel of FILL) {
     for (const h of document.querySelectorAll<HTMLElement>(sel)) {
-      if (!phone) {
-        h.style.removeProperty('--framer-font-size')
-        h.style.removeProperty('white-space')
-      } else fill(h)
+      if (!phone) reset(h)
+      else fill(h)
     }
   }
   for (const [sel, max] of SINGLE) {
     for (const h of document.querySelectorAll<HTMLElement>(sel)) {
       if (!phone) {
-        h.style.removeProperty('--framer-font-size')
-        h.style.removeProperty('white-space')
+        reset(h)
         continue
       }
-      const base = (h.style.removeProperty('--framer-font-size'), parseFloat(getComputedStyle(h).fontSize))
+      const base = (remember(h), reset(h), parseFloat(getComputedStyle(h).fontSize))
       const size = neededSize(h)
       if (size !== null) apply(h, base, size, max)
     }
@@ -87,10 +102,10 @@ function fit() {
   for (const sel of GROUPS) {
     const list = [...document.querySelectorAll<HTMLElement>(sel)]
     if (!phone) {
-      list.forEach((h) => (h.style.removeProperty('--framer-font-size'), h.style.removeProperty('white-space')))
+      list.forEach(reset)
       continue
     }
-    const bases = list.map((h) => (h.style.removeProperty('--framer-font-size'), parseFloat(getComputedStyle(h).fontSize)))
+    const bases = list.map((h) => (remember(h), reset(h), parseFloat(getComputedStyle(h).fontSize)))
     const sizes = list.map(neededSize).filter((s): s is number => s !== null)
     if (!sizes.length) continue
     const size = Math.min(...sizes)
