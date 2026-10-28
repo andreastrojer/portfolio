@@ -844,10 +844,6 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 																				"var(--extracted-1of0zx5, var(--token-e2dbbab3-aec2-416b-bf1a-eb48fa7fb748, rgb(10, 10, 10)))",
 																		}}
 																	>
-																		{"Ausgew\xE4hlte "}
-																		<motion.br
-																			suppressHydrationWarning={true}
-																		/>
 																		{"Arbeiten"}
 																	</motion.h2>
 																</React.Fragment>
@@ -869,7 +865,7 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 																"var(--extracted-1of0zx5, var(--token-ae5a64aa-bf4e-4e59-85e9-93e8d8e1c064, rgb(4, 0, 74)))",
 														}}
 													>
-														{"Ausgew\xE4hlte Arbeiten"}
+														{"Arbeiten"}
 													</motion.h2>
 												</React.Fragment>
 											</RichText>

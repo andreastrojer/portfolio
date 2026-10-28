@@ -82,4 +82,13 @@ if (m) {
     fs.writeFileSync(homeFile, hp)
   }
 }
+
+// Startseite: Überschrift "Ausgewählte Arbeiten" → "Arbeiten"
+{
+  let hp = fs.readFileSync(homeFile, 'utf8')
+  hp = hp.split('Ausgew\\xE4hlte Arbeiten').join('Arbeiten').split('Ausgewählte Arbeiten').join('Arbeiten')
+  // Handy/Tablet-Variante: "Ausgewählte" + Zeilenumbruch + "Arbeiten"
+  hp = hp.replace(/\{"Ausgew(?:\\xE4|ä)hlte "\}\s*<motion\.br\s+suppressHydrationWarning=\{true\}\s*\/>\s*/g, '')
+  fs.writeFileSync(homeFile, hp)
+}
 console.log('Export-Korrekturen angewendet')

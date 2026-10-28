@@ -29,7 +29,9 @@ html.lenis, html.lenis body { height: auto; }
   transform: translate(-50%);
   width: 20%;
   max-width: 300px;
-  z-index: 10;
+  z-index: 1000;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 @media (max-width: 1199.98px) {
   .nav-shell { left: 50%; width: calc(100% - 40px); }
@@ -37,7 +39,51 @@ html.lenis, html.lenis body { height: auto; }
 
 /* Geöffnetes Menü auf Tablet & Handy: kleinere Schrift (Desktop unverändert). */
 @media (max-width: 1199.98px) {
-  .nav-shell .framer-styles-preset-ml7vmq { --framer-font-size: 16px !important; --framer-line-height: 1.3em !important; }
-  .nav-shell .framer-styles-preset-3me1a8 { --framer-font-size: 12px !important; }
+  .nav-shell .framer-styles-preset-ml7vmq { --framer-font-size: 20px !important; --framer-line-height: 1.35em !important; }
+  .nav-shell .framer-styles-preset-3me1a8 { --framer-font-size: 13px !important; }
   .nav-shell p, .nav-shell .framer-text { overflow-wrap: anywhere; }
+}
+
+/* Startseite Handy: „Ausgewählte Arbeiten“ und „Alle Projekte“ untereinander statt ineinander */
+@media (max-width: 809.98px) {
+  [data-framer-name="Headings & Button"] { flex-wrap: wrap !important; row-gap: 16px !important; align-items: flex-start !important; }
+}
+
+/* Stats (Jahre Erfahrung …): Linien wie bei Programmskills – 1 px Dunkelblau,
+   nur waagrecht (oben/unten), keine Seitenlinien. Alle Bildschirmgrößen. */
+[data-framer-name="Stats"][data-border] {
+  --border-color: #04004a !important;
+  --border-top-width: 1px !important;
+  --border-bottom-width: 1px !important;
+  --border-left-width: 0px !important;
+  --border-right-width: 0px !important;
+}
+@media (max-width: 809.98px) {
+  /* untereinander gestapelt: Linie zwischen den Werten */
+  [data-framer-name="Stats"] > * + * { border-top: 1px solid #04004a; }
+}
+
+/* Handy: Header-Bereiche kürzer */
+@media (max-width: 809.98px) {
+  main[data-page="home"] [data-framer-name="Hero Section"] {
+    height: 68vh !important; height: 68svh !important; min-height: 0 !important;
+  }
+  main[data-page="projects"] [data-framer-name="Hero Section"],
+  main[data-page="detail"] [data-framer-name="Hero Section"] {
+    height: 300px !important; min-height: 300px !important; max-height: 300px !important;
+  }
+
+  /* Footer kompakter */
+  footer [data-framer-name="Content"] { padding: 40px 20px 28px !important; }
+  footer [data-framer-name="Wrapper"] { gap: 24px !important; }
+  footer [data-framer-name="Links & Copyright"] { gap: 28px !important; }
+}
+
+/* Projektkarten auf Touch-Geräten: Infos gleiten beim 1. Tippen sanft herein */
+@media (hover: none) {
+  [data-hover-reveal] > * {
+    transform: translateY(14px);
+    transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease !important;
+  }
+  [data-hover-reveal="on"] > * { transform: none; }
 }

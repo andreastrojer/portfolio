@@ -4,7 +4,8 @@ import { UnframerProvider } from 'unframer'
 import { useEffect } from 'react'
 import { navigate, usePathname } from './router'
 
-import Navbar from './framer/navbar'
+import Nav from './Nav'
+import './touchCards'
 import Footer from './framer/footer'
 import PageHome from './framer/page-home'
 import PageProjects from './framer/page-projects'
@@ -40,13 +41,8 @@ export default function App() {
   return (
     <UnframerProvider navigate={navigate}>
       {/* Navbar wie im Framer-Layout-Template: fixiert, oben mittig (Maße in index.css) */}
-      <div className="nav-shell">
-        <Navbar.Responsive
-          style={{ width: '100%' }}
-          variants={{ base: 'Tablet & Mobile Closed', xl: 'Desktop / Closed' } as any}
-        />
-      </div>
-      <main style={{ width: '100%' }}>
+      <Nav path={path} />
+      <main style={{ width: '100%' }} data-page={path === '/' ? 'home' : path === '/projects' ? 'projects' : path.startsWith('/projects/') ? 'detail' : path.slice(1)}>
         <Page path={path} />
       </main>
       <Footer.Responsive

@@ -52,6 +52,19 @@ export function withPageTransition(update: () => void) {
   style.id = STYLE_ID
   style.textContent = CSS
   document.head.appendChild(style)
-  const transition = doc.startViewTransition(update)
-  transition.finished.finally(() => style.remove())
+  try {
+    let ran = false
+    const transition = doc.startViewTransition(() => {
+      ran = true
+      update()
+    })
+    transition.finished.catch(() => {}).finally(() => style.remove())
+    // Falls der Browser den Übergang verwirft, ohne die Seite zu wechseln: trotzdem wechseln
+    ;(transition as any).ready?.catch?.(() => {
+      if (!ran) update()
+    })
+  } catch {
+    style.remove()
+    update()
+  }
 }
