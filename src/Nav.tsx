@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import Navbar from './framer/navbar'
+import { flushSync } from 'react-dom'
 import { navigate } from './router'
 
 // Navigation aus Framer, aber Öffnen/Schließen und die Links steuern wir selbst.
@@ -37,14 +38,35 @@ export default function Nav({ path }: { path: string }) {
       const to = closedHeight.current || 74
       if (h > to + 4) {
         animating.current = true
-        const anim = el.animate(
-          [{ clipPath: 'inset(0 0 0 0 round 8px)' }, { clipPath: `inset(0 0 ${h - to}px 0 round 8px)` }],
-          { duration: 320, easing: EASE, fill: 'forwards' },
+        // Sichtbar bleibt immer nur der obere Streifen (von oben gemessen) – so blitzt
+        // die offene Nav nicht noch einmal auf, wenn Framer danach umschaltet.
+        const closedClip = `inset(0 0 calc(100% - ${to}px) 0 round 8px)`
+        ref.current?.setAttribute('data-open', 'false') // Breite schon mit zuklappen
+        const items = [...el.querySelectorAll<HTMLElement>('a, [data-framer-name="Nav Links & Place"] img')].filter(
+          (n) => n.getBoundingClientRect().top > el.getBoundingClientRect().top + to - 8,
         )
+        items.forEach((n) =>
+          n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease-out', fill: 'forwards' }),
+        )
+        const anim = el.animate([{ clipPath: 'inset(0 0 0% 0 round 8px)' }, { clipPath: closedClip }], {
+          duration: 340,
+          easing: EASE,
+          fill: 'forwards',
+        })
         anim.onfinish = () => {
-          animating.current = false
-          setOpenState(false)
-          requestAnimationFrame(() => anim.cancel())
+          flushSync(() => setOpenState(false))
+          // Clip erst lösen, wenn die Nav wirklich auf zugeklappter Höhe ist
+          const start = performance.now()
+          const wait = () => {
+            const cur = box()
+            const hh = cur?.getBoundingClientRect().height ?? 0
+            if (hh <= to + 4 || performance.now() - start > 800) {
+              anim.cancel()
+              items.forEach((n) => n.getAnimations().forEach((a) => a.cancel()))
+              animating.current = false
+            } else requestAnimationFrame(wait)
+          }
+          requestAnimationFrame(wait)
         }
         return
       }
@@ -57,14 +79,15 @@ export default function Nav({ path }: { path: string }) {
     if (!el) return
     const h = el.getBoundingClientRect().height
     if (!open) {
-      closedHeight.current = h
+      // während des Zuklappens ist Framers Box evtl. noch hoch – dann nicht übernehmen
+      if (!animating.current) closedHeight.current = h
       return
     }
     // Öffnen: von der geschlossenen Höhe aufklappen, Menüpunkte nacheinander einblenden
     const from = closedHeight.current || 74
     if (h > from + 4 && el.animate && custom()) {
       el.animate(
-        [{ clipPath: `inset(0 0 ${h - from}px 0 round 8px)` }, { clipPath: 'inset(0 0 0 0 round 8px)' }],
+        [{ clipPath: `inset(0 0 calc(100% - ${from}px) 0 round 8px)` }, { clipPath: 'inset(0 0 0% 0 round 8px)' }],
         { duration: 520, easing: EASE },
       )
       const items = [...el.querySelectorAll<HTMLElement>('a, [data-framer-name="Nav Links & Place"] img')].filter(

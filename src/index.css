@@ -138,9 +138,9 @@ body { background: transparent !important; }
     pointer-events: none;
     background: linear-gradient(
       to bottom,
-      rgba(4, 0, 74, 0) 38%,
-      rgba(4, 0, 74, 0.55) 62%,
-      rgba(4, 0, 74, 0.92) 100%
+      rgba(16, 27, 33, 0) 38%,
+      rgba(16, 27, 33, 0.55) 62%,
+      rgba(16, 27, 33, 0.92) 100%
     );
   }
   main[data-page="home"] [data-framer-name="Hero Section"] [data-framer-name="Hero Name"] [data-text-fill] {
@@ -151,4 +151,37 @@ body { background: transparent !important; }
     position: relative;
     z-index: 1;
   }
+}
+
+@media (max-width: 809.98px) {
+  /* Programmskills: Programme links unterhalb der Kategorie statt rechts daneben */
+  [data-framer-name="Image & Stats"] > :first-child > :not(:first-child) {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+  [data-framer-name="Image & Stats"] > :first-child > :not(:first-child) > * {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  /* Muster rechts im Header (Übersicht + Detail): kleiner und höher, damit es ganz sichtbar ist */
+  main[data-page="detail"] [data-framer-name="Hero Section"] [class*="-container"]:has(> svg),
+  main[data-page="projects"] > * > *:first-child [class*="-container"]:has(> svg) {
+    position: absolute !important;
+    top: 48px !important;
+    right: auto !important;
+    left: calc(100vw - 168px) !important;
+    width: 152px !important;
+    height: 175px !important;
+  }
+  main[data-page="detail"] [data-framer-name="Hero Section"] [class*="-container"]:has(> svg) > svg,
+  main[data-page="projects"] > * > *:first-child [class*="-container"]:has(> svg) > svg {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Navigation zugeklappt schmaler, aufgeklappt volle Breite – weich animiert */
+  .nav-shell { transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .nav-shell[data-open="false"] { width: min(calc(100% - 40px), 300px) !important; }
 }
