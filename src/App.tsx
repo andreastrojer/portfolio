@@ -36,6 +36,11 @@ export default function App() {
   useFitHeadlines(path)
   useEffect(() => {
     document.title = TITLES[path] ?? 'Andreas Trojer'
+    // iPhone: Statusleiste (Bereich um die Kamera) in der Farbe des oberen Seitenrands,
+    // damit sie nahtlos ins Hero-Bild bzw. den blauen Header übergeht.
+    const top = path === '/' ? '#bdc1ca' : path.startsWith('/projects') ? '#04004a' : '#e4e7ed'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', top)
+    document.documentElement.style.backgroundColor = top
   }, [path])
 
   return (

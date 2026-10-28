@@ -14,6 +14,12 @@ export default function Nav({ path }: { path: string }) {
   const animating = useRef(false)
   const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
   // nur Tablet & Handy – am Desktop animiert Framer selbst
+  // Animiert wird die Box selbst (hat den Weichzeichner) – nicht der Rahmen drumherum,
+  // sonst schaltet der Browser den Weichzeichner während der Animation kurz ab.
+  const box = () =>
+    ([...(ref.current?.querySelectorAll('nav') ?? [])].find((n) => n.getBoundingClientRect().width > 0) as
+      | HTMLElement
+      | undefined) || ref.current
   const custom = () => typeof window !== 'undefined' && window.innerWidth < 1200
 
   const openRef = useRef(false)
@@ -24,7 +30,7 @@ export default function Nav({ path }: { path: string }) {
     const prev = openRef.current
     const value = typeof next === 'function' ? next(prev) : next
     if (value === prev || animating.current) return
-    const el = ref.current
+    const el = box()
     if (prev && !value && el && el.animate && custom()) {
       // Schließen: erst zuklappen, dann Variante wechseln
       const h = el.getBoundingClientRect().height
@@ -47,7 +53,7 @@ export default function Nav({ path }: { path: string }) {
   }
 
   useLayoutEffect(() => {
-    const el = ref.current
+    const el = box()
     if (!el) return
     const h = el.getBoundingClientRect().height
     if (!open) {

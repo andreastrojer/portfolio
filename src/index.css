@@ -1,5 +1,6 @@
 /* Keine Tailwind-Basisstile: die würden Framers eigene Styles verändern (1:1-Treue). */
-html, body { margin: 0; padding: 0; background: rgb(228, 231, 237); }
+html, body { margin: 0; padding: 0; }
+html { background: rgb(228, 231, 237); }
 #root { min-height: 100vh; }
 
 /* Empfohlene Lenis-Styles */
@@ -108,8 +109,9 @@ html.lenis, html.lenis body { height: auto; }
   [data-framer-name="Hero Headings"] [data-framer-name="Title"] h1 { --framer-font-weight: 600 !important; font-weight: 600 !important; }
 }
 
-/* iPhone: Bereich um die Kamera (Notch) mit der Seite füllen statt weiß */
-html, body { background: rgb(228, 231, 237); }
+/* iPhone: Bereich um die Kamera (Notch) – Farbe setzt App.tsx je nach Seite am <html> */
+html { background: rgb(228, 231, 237); }
+body { background: transparent !important; }
 .nav-shell { top: calc(24px + env(safe-area-inset-top, 0px)); }
 
 /* „ANDREAS TROJER“: Vollfarbe #101B21 statt Farbverlauf – alle Geräte */
@@ -125,4 +127,28 @@ html, body { background: rgb(228, 231, 237); }
 /* Projektübersicht am Handy: ein Projekt pro Zeile */
 @media (max-width: 809.98px) {
   main[data-page="projects"] [data-framer-name="Projects Grid"] { grid-template-columns: 1fr !important; }
+}
+
+/* Handy-Hero „dunkler Look“: Verlauf unten im Foto, Name hell darauf (Desktop unverändert) */
+@media (max-width: 809.98px) {
+  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(4, 0, 74, 0) 38%,
+      rgba(4, 0, 74, 0.55) 62%,
+      rgba(4, 0, 74, 0.92) 100%
+    );
+  }
+  main[data-page="home"] [data-framer-name="Hero Section"] [data-framer-name="Hero Name"] [data-text-fill] {
+    -webkit-text-fill-color: #e4e7ed !important;
+    color: #e4e7ed !important;
+  }
+  main[data-page="home"] [data-framer-name="Hero Section"] [data-framer-name="Content"] {
+    position: relative;
+    z-index: 1;
+  }
 }
