@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import Navbar from './framer/navbar'
 import { navigate } from './router'
 
@@ -8,11 +8,75 @@ import { navigate } from './router'
 const MENU = '[data-framer-name="Menu "], [data-framer-name="Menu Icon"]'
 
 export default function Nav({ path }: { path: string }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpenState] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const closedHeight = useRef(0)
+  const animating = useRef(false)
+  const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
+  // nur Tablet & Handy – am Desktop animiert Framer selbst
+  const custom = () => typeof window !== 'undefined' && window.innerWidth < 1200
+
+  const openRef = useRef(false)
+  openRef.current = open
+
+  // Auf- und Zuklappen weich animieren (Framers Handy-Varianten springen sonst hart um)
+  const setOpen = (next: boolean | ((o: boolean) => boolean)) => {
+    const prev = openRef.current
+    const value = typeof next === 'function' ? next(prev) : next
+    if (value === prev || animating.current) return
+    const el = ref.current
+    if (prev && !value && el && el.animate && custom()) {
+      // Schließen: erst zuklappen, dann Variante wechseln
+      const h = el.getBoundingClientRect().height
+      const to = closedHeight.current || 74
+      if (h > to + 4) {
+        animating.current = true
+        const anim = el.animate(
+          [{ clipPath: 'inset(0 0 0 0 round 8px)' }, { clipPath: `inset(0 0 ${h - to}px 0 round 8px)` }],
+          { duration: 320, easing: EASE, fill: 'forwards' },
+        )
+        anim.onfinish = () => {
+          animating.current = false
+          setOpenState(false)
+          requestAnimationFrame(() => anim.cancel())
+        }
+        return
+      }
+    }
+    setOpenState(value)
+  }
+
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const h = el.getBoundingClientRect().height
+    if (!open) {
+      closedHeight.current = h
+      return
+    }
+    // Öffnen: von der geschlossenen Höhe aufklappen, Menüpunkte nacheinander einblenden
+    const from = closedHeight.current || 74
+    if (h > from + 4 && el.animate && custom()) {
+      el.animate(
+        [{ clipPath: `inset(0 0 ${h - from}px 0 round 8px)` }, { clipPath: 'inset(0 0 0 0 round 8px)' }],
+        { duration: 520, easing: EASE },
+      )
+      const items = [...el.querySelectorAll<HTMLElement>('a, [data-framer-name="Nav Links & Place"] img')].filter(
+        (n) => n.getBoundingClientRect().top > el.getBoundingClientRect().top + from - 8,
+      )
+      items.forEach((n, i) =>
+        n.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], {
+          duration: 420,
+          delay: 90 + i * 45,
+          easing: EASE,
+          fill: 'backwards',
+        }),
+      )
+    }
+  }, [open])
 
   // bei Seitenwechsel schließen
-  useEffect(() => setOpen(false), [path])
+  useEffect(() => setOpenState(false), [path])
 
   // Tippen außerhalb schließt das Menü
   useEffect(() => {

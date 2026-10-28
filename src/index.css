@@ -72,11 +72,11 @@ html.lenis, html.lenis body { height: auto; }
 /* Handy: Header-Bereiche kürzer */
 @media (max-width: 809.98px) {
   main[data-page="home"] [data-framer-name="Hero Section"] {
-    height: 68vh !important; height: 68svh !important; min-height: 0 !important;
+    height: 80vh !important; height: 80svh !important; min-height: 0 !important;
   }
   main[data-page="projects"] > * > *:first-child,
   main[data-page="detail"] [data-framer-name="Hero Section"] {
-    height: 300px !important; min-height: 300px !important; max-height: 300px !important;
+    height: 230px !important; min-height: 230px !important; max-height: 230px !important;
   }
 
   /* Footer kompakter */
@@ -100,8 +100,8 @@ html.lenis, html.lenis body { height: auto; }
 
 @media (max-width: 809.98px) {
   /* Kompetenzfelder kürzer (in Framer mind. volle Bildschirmhöhe) */
-  [data-framer-name="Service Section"] { min-height: 0 !important; padding-top: 48px !important; padding-bottom: 48px !important; }
-  [data-framer-name="Service Section"] > [data-framer-name="Content"] { padding-top: 40px !important; padding-bottom: 40px !important; }
+  [data-framer-name="Service Section"] { min-height: 0 !important; padding-top: 72px !important; padding-bottom: 72px !important; }
+  [data-framer-name="Service Section"] > [data-framer-name="Content"] { padding-top: 64px !important; padding-bottom: 64px !important; }
 
   /* Projekt-Überschriften am Handy einheitlich dünner */
   main[data-page="projects"] [data-framer-name="H1"] h1,
@@ -111,3 +111,18 @@ html.lenis, html.lenis body { height: auto; }
 /* iPhone: Bereich um die Kamera (Notch) mit der Seite füllen statt weiß */
 html, body { background: rgb(228, 231, 237); }
 .nav-shell { top: calc(24px + env(safe-area-inset-top, 0px)); }
+
+/* „ANDREAS TROJER“: Vollfarbe #101B21 statt Farbverlauf – alle Geräte */
+[data-framer-name="Hero Name"] [data-text-fill] {
+  background-image: none !important;
+  -webkit-text-fill-color: #101b21 !important;
+  color: #101b21 !important;
+}
+
+/* „Jahre Erfahrung / Projekte / Kunden“ entfernt – alle Geräte */
+[data-framer-name="Stats"] { display: none !important; }
+
+/* Projektübersicht am Handy: ein Projekt pro Zeile */
+@media (max-width: 809.98px) {
+  main[data-page="projects"] [data-framer-name="Projects Grid"] { grid-template-columns: 1fr !important; }
+}
