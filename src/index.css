@@ -145,11 +145,11 @@ body { background: transparent !important; }
   main[data-page="detail"] [data-framer-name="Hero Section"] [class*="-container"]:has(> svg),
   main[data-page="projects"] > * > *:first-child [class*="-container"]:has(> svg) {
     position: absolute !important;
-    top: 48px !important;
+    top: 94px !important; /* unter der Nav */
     right: auto !important;
-    left: calc(100vw - 168px) !important;
-    width: 152px !important;
-    height: 175px !important;
+    left: calc(100vw - 142px) !important;
+    width: 122px !important;
+    height: 141px !important;
   }
   main[data-page="detail"] [data-framer-name="Hero Section"] [class*="-container"]:has(> svg) > svg,
   main[data-page="projects"] > * > *:first-child [class*="-container"]:has(> svg) > svg {
@@ -296,4 +296,52 @@ body { background: transparent !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .m-hero__inner > * { animation: none; }
+}
+
+@media (max-width: 809.98px) {
+  /* Projektübersicht: Filter in EINER Zeile, seitlich wischbar statt wild umgebrochen */
+  main[data-page="projects"] [data-framer-name="Tabs"] { width: 100% !important; min-width: 0 !important; }
+  main[data-page="projects"] [data-framer-name="Tabs"] > div {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important; overflow-y: hidden !important;
+    width: 100% !important; box-sizing: border-box;
+    padding-right: 28px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: linear-gradient(to right, #000 82%, transparent);
+    mask-image: linear-gradient(to right, #000 82%, transparent);
+  }
+  main[data-page="projects"] [data-framer-name="Tabs"] > div::-webkit-scrollbar { display: none; }
+  main[data-page="projects"] [data-framer-name="Tabs"] > div > * { flex: none !important; }
+
+  /* Projektdetail: 3. Bild volle Breite wie Bild 1 und 2 */
+  main[data-page="detail"] [data-framer-name="Details 2 Section"] [data-framer-name="Content"],
+  main[data-page="detail"] [data-framer-name="Details 2 Section"] [data-framer-name="Wrapper"],
+  main[data-page="detail"] [data-framer-name="Details & Image 3"],
+  main[data-page="detail"] [data-framer-name="Approach Wrapper"] { overflow: visible !important; }
+  main[data-page="detail"] [data-framer-name="Approach Wrapper"] > :has(img) {
+    width: calc(100% + 48px) !important; max-width: none !important;
+    margin-left: -24px !important; margin-right: -24px !important;
+  }
+
+  /* Projektdetail: Abstände am Handy deutlich kleiner */
+  main[data-page="detail"] [data-framer-name="Details Section"],
+  main[data-page="detail"] [data-framer-name="Details 2 Section"] { padding-top: 56px !important; }
+  main[data-page="detail"] [data-framer-name="Details Section"] + div { padding-top: 56px !important; }
+  main[data-page="detail"] [data-framer-name="Gallery Section"] { padding-top: 48px !important; }
+  main[data-page="detail"] [data-framer-name="Gallery Section"]:not(:has(img)) { display: none !important; }
+  main[data-page="detail"] [data-framer-name="More Projects Section"] { padding-top: 64px !important; padding-bottom: 72px !important; }
+  main[data-page="detail"] [data-framer-name="Details Section"] [data-framer-name="Wrapper"],
+  main[data-page="detail"] [data-framer-name="Details & Image 3"] { gap: 32px !important; padding-top: 24px !important; }
+  main[data-page="detail"] [data-framer-name="Details 2 Section"] > [data-framer-name="Content"] > [data-framer-name="Wrapper"],
+  main[data-page="detail"] [data-framer-name="Approach & Deliverables"] { gap: 56px !important; }
+  main[data-page="detail"] [data-framer-name="Overview & Live Link"],
+  main[data-page="detail"] [data-framer-name="Approach Wrapper"],
+  main[data-page="detail"] [data-framer-name="Deliverables Wrapper"] { gap: 32px !important; }
+  main[data-page="detail"] [data-framer-name="Deliverables Wrapper"] { padding-top: 24px !important; }
+  main[data-page="detail"] [data-framer-name="Deliverables Content"] { row-gap: 28px !important; }
+
+  /* „Mehrere Projekte“: ein Projekt pro Zeile */
+  main[data-page="detail"] [data-framer-name="Projects Grid"] { grid-template-columns: 1fr !important; }
 }
