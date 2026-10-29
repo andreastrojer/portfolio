@@ -6,6 +6,7 @@ import { navigate, usePathname } from './router'
 
 import Nav from './Nav'
 import './touchCards'
+import './heroAutoTrail'
 import Footer from './framer/footer'
 import PageHome from './framer/page-home'
 import PageProjects from './framer/page-projects'
