@@ -162,90 +162,92 @@ body { background: transparent !important; }
   .nav-shell[data-open="false"] { width: min(calc(100% - 40px), 300px) !important; }
 }
 
-/* ───────── Handy: neue Startansicht, schlanke Nav, eigener Footer (Desktop unverändert) ───────── */
-.m-hero, .m-footer { display: none; }
+/* ───────── Neue Startansicht (alle Geräte) · Handy: schlanke Nav, eigener Footer ───────── */
+.m-footer { display: none; }
+
+/* Startansicht – alle Geräte (Handy-Werte; Laptop/Desktop-Größen weiter unten) */
+main[data-page="home"] { position: relative; }
+main[data-page="home"] [data-framer-name="Hero Section"] {
+  height: 90vh !important; height: 90svh !important; max-height: none !important;
+  background: #101b21 !important;
+}
+/* Foto nur im oberen Teil, unten weich auslaufend – Text sitzt darunter wie im Entwurf */
+main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria {
+  height: 80% !important; bottom: auto !important;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
+}
+/* Framers Name ausblenden – ersetzt durch .m-hero */
+main[data-page="home"] [data-framer-name="Hero Section"] [data-framer-name="Content"] { visibility: hidden; }
+
+/* Foto blendet nach unten in #101B21 aus */
+main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(16, 27, 33, 0) 42%,
+    rgba(16, 27, 33, 0.55) 64%,
+    rgba(16, 27, 33, 0.92) 80%,
+    #101b21 92%
+  );
+}
+
+.m-hero {
+  display: flex;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 90vh; height: 90svh;
+  z-index: 2;
+  pointer-events: none;
+  align-items: flex-end;
+  font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
+  color: #f4f5f7;
+}
+.m-hero__inner { width: 100%; padding: 0 24px 40px; box-sizing: border-box; text-align: center; }
+.m-hero__inner > * { animation: m-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.m-hero__inner > :nth-child(2) { animation-delay: 80ms; }
+.m-hero__inner > :nth-child(3) { animation-delay: 180ms; }
+/* Beschriftung wie „PROJEKTE“ im restlichen Portfolio */
+.m-hero__eyebrow {
+  margin: 0 0 12px;
+  font-size: 13px; font-weight: 600; line-height: 1.4;
+  letter-spacing: 0.012em; text-transform: uppercase;
+  color: rgba(228, 231, 237, 0.6);
+}
+.m-hero__name {
+  margin: 0;
+  font-size: clamp(56px, 18.5vw, 96px);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: #fff;
+}
+/* Button wie „MEIN LINKEDIN →“ / „ALLE PROJEKTE →“: Text mit dünner Linie darunter */
+.m-link {
+  position: relative;
+  display: inline-block;
+  margin-top: 28px;
+  padding: 4px 0 7px;
+  background: none; border: 0; border-radius: 0;
+  font: 600 13px/1.4 "Geist", "Geist Placeholder", sans-serif;
+  letter-spacing: 0.012em; text-transform: uppercase;
+  color: #e4e7ed;
+  cursor: pointer; pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.m-link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: rgba(228, 231, 237, 0.45);
+  transform-origin: left; transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms;
+}
+.m-link:active::after { background: #e4e7ed; transform: scaleX(0.6); }
+
 
 @media (max-width: 809.98px) {
-  main[data-page="home"] { position: relative; }
-  main[data-page="home"] [data-framer-name="Hero Section"] {
-    height: 90vh !important; height: 90svh !important; max-height: none !important;
-    background: #101b21 !important;
-  }
-  /* Foto nur im oberen Teil, unten weich auslaufend – Text sitzt darunter wie im Entwurf */
-  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria {
-    height: 80% !important; bottom: auto !important;
-    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
-    mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
-  }
-  /* Framers Name ausblenden – ersetzt durch .m-hero */
-  main[data-page="home"] [data-framer-name="Hero Section"] [data-framer-name="Content"] { visibility: hidden; }
-
-  /* Foto blendet nach unten in #101B21 aus */
-  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      rgba(16, 27, 33, 0) 42%,
-      rgba(16, 27, 33, 0.55) 64%,
-      rgba(16, 27, 33, 0.92) 80%,
-      #101b21 92%
-    );
-  }
-
-  .m-hero {
-    display: flex;
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 90vh; height: 90svh;
-    z-index: 2;
-    pointer-events: none;
-    align-items: flex-end;
-    font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
-    color: #f4f5f7;
-  }
-  .m-hero__inner { width: 100%; padding: 0 24px 40px; box-sizing: border-box; text-align: center; }
-  .m-hero__inner > * { animation: m-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-  .m-hero__inner > :nth-child(2) { animation-delay: 80ms; }
-  .m-hero__inner > :nth-child(3) { animation-delay: 180ms; }
-  /* Beschriftung wie „PROJEKTE“ im restlichen Portfolio */
-  .m-hero__eyebrow {
-    margin: 0 0 12px;
-    font-size: 13px; font-weight: 600; line-height: 1.4;
-    letter-spacing: 0.012em; text-transform: uppercase;
-    color: rgba(228, 231, 237, 0.6);
-  }
-  .m-hero__name {
-    margin: 0;
-    font-size: clamp(56px, 18.5vw, 96px);
-    font-weight: 900;
-    line-height: 0.88;
-    letter-spacing: -0.035em;
-    text-transform: uppercase;
-    color: #fff;
-  }
-  /* Button wie „MEIN LINKEDIN →“ / „ALLE PROJEKTE →“: Text mit dünner Linie darunter */
-  .m-link {
-    position: relative;
-    display: inline-block;
-    margin-top: 28px;
-    padding: 4px 0 7px;
-    background: none; border: 0; border-radius: 0;
-    font: 600 13px/1.4 "Geist", "Geist Placeholder", sans-serif;
-    letter-spacing: 0.012em; text-transform: uppercase;
-    color: #e4e7ed;
-    cursor: pointer; pointer-events: auto;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .m-link::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-    background: rgba(228, 231, 237, 0.45);
-    transform-origin: left; transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms;
-  }
-  .m-link:active::after { background: #e4e7ed; transform: scaleX(0.6); }
-
   /* Nav schlank: dünner heller Rand, weniger Innenabstand */
   .nav-shell nav { border: 1px solid rgba(255, 255, 255, 0.22); box-sizing: border-box; border-radius: 10px !important; }
   .nav-shell nav [data-framer-name="Content"] { padding-top: 7px !important; padding-bottom: 7px !important; }
@@ -344,4 +346,17 @@ body { background: transparent !important; }
 
   /* „Mehrere Projekte“: ein Projekt pro Zeile */
   main[data-page="detail"] [data-framer-name="Projects Grid"] { grid-template-columns: 1fr !important; }
+}
+
+/* Startansicht auf Tablet, Laptop & Desktop: gleiche Idee, Name in einer Zeile und größer */
+@media (min-width: 810px) {
+  main[data-page="home"] [data-framer-name="Hero Section"] { height: 100vh !important; height: 100svh !important; }
+  .m-hero { height: 100vh; height: 100svh; }
+  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria { height: 82% !important; }
+  .m-hero__inner { padding: 0 40px 64px; }
+  .m-hero__eyebrow { font-size: 14px; margin-bottom: 18px; }
+  .m-hero__name { font-size: clamp(72px, 9.6vw, 176px); line-height: 0.9; }
+  .m-hero__name br { display: none; }
+  .m-link { margin-top: 36px; font-size: 14px; }
+  .m-link:hover::after { background: #e4e7ed; }
 }
