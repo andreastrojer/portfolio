@@ -352,11 +352,22 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
 @media (min-width: 810px) {
   main[data-page="home"] [data-framer-name="Hero Section"] { height: 100vh !important; height: 100svh !important; }
   .m-hero { height: 100vh; height: 100svh; }
-  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria { height: 82% !important; }
-  .m-hero__inner { padding: 0 40px 64px; }
+  /* Foto über die volle Höhe, Verlauf erst ganz unten – Oberkörper bleibt sichtbar */
+  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria {
+    height: 100% !important;
+    -webkit-mask-image: none !important; mask-image: none !important;
+  }
+  main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(16, 27, 33, 0) 58%,
+      rgba(16, 27, 33, 0.45) 76%,
+      rgba(16, 27, 33, 0.85) 92%,
+      #101b21 100%
+    ) !important;
+  }
+  .m-hero__inner { padding: 0 40px 48px; }
   .m-hero__eyebrow { font-size: 14px; margin-bottom: 18px; }
   .m-hero__name { font-size: clamp(72px, 9.6vw, 176px); line-height: 0.9; }
   .m-hero__name br { display: none; }
-  .m-link { margin-top: 36px; font-size: 14px; }
-  .m-link:hover::after { background: #e4e7ed; }
 }
