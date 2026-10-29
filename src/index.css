@@ -145,11 +145,11 @@ body { background: transparent !important; }
   main[data-page="detail"] [data-framer-name="Hero Section"] [class*="-container"]:has(> svg),
   main[data-page="projects"] > * > *:first-child [class*="-container"]:has(> svg) {
     position: absolute !important;
-    top: 94px !important; /* unter der Nav */
+    top: 104px !important; /* unter der Nav */
     right: auto !important;
-    left: calc(100vw - 142px) !important;
-    width: 122px !important;
-    height: 141px !important;
+    left: calc(100vw - 116px) !important; /* ganz rechts */
+    width: 108px !important;
+    height: 124px !important;
   }
   main[data-page="detail"] [data-framer-name="Hero Section"] [class*="-container"]:has(> svg) > svg,
   main[data-page="projects"] > * > *:first-child [class*="-container"]:has(> svg) > svg {
@@ -360,14 +360,14 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
   main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::after {
     background: linear-gradient(
       to bottom,
-      rgba(16, 27, 33, 0) 58%,
-      rgba(16, 27, 33, 0.45) 76%,
-      rgba(16, 27, 33, 0.85) 92%,
+      rgba(16, 27, 33, 0) 50%,
+      rgba(16, 27, 33, 0.55) 68%,
+      rgba(16, 27, 33, 0.9) 84%,
       #101b21 100%
     ) !important;
   }
   .m-hero__inner { padding: 0 40px 48px; }
-  .m-hero__eyebrow { font-size: 14px; margin-bottom: 18px; }
+  .m-hero__eyebrow { font-size: 14px; margin-bottom: 18px; color: rgba(228, 231, 237, 0.78); }
   .m-hero__name { font-size: clamp(72px, 9.6vw, 176px); line-height: 0.9; }
   .m-hero__name br { display: none; }
 }
