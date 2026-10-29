@@ -13,6 +13,8 @@ import PageContact from './framer/page-contact'
 import Page404 from './framer/page-404'
 import ProjectDetail from './ProjectDetail'
 import { useFitHeadlines } from './fitHeadlines'
+import MobileHero from './MobileHero'
+import MobileFooter from './MobileFooter'
 
 const FULL = { style: { width: '100%' } } as const
 
@@ -48,12 +50,16 @@ export default function App() {
       {/* Navbar wie im Framer-Layout-Template: fixiert, oben mittig (Maße in index.css) */}
       <Nav path={path} />
       <main style={{ width: '100%' }} data-page={path === '/' ? 'home' : path === '/projects' ? 'projects' : path.startsWith('/projects/') ? 'detail' : path.slice(1)}>
+        {path === '/' && <MobileHero />}
         <Page path={path} />
       </main>
-      <Footer.Responsive
-        style={{ width: '100%' }}
-        variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
-      />
+      <div className="framer-footer">
+        <Footer.Responsive
+          style={{ width: '100%' }}
+          variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
+        />
+      </div>
+      <MobileFooter />
     </UnframerProvider>
   )
 }
