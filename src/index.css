@@ -252,8 +252,7 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
   .nav-shell nav { border: 1px solid rgba(255, 255, 255, 0.22); box-sizing: border-box; border-radius: 10px !important; }
   .nav-shell nav [data-framer-name="Content"] { padding-top: 7px !important; padding-bottom: 7px !important; }
 
-  /* Footer: Framer-Version aus, eigene an */
-  .framer-footer { display: none; }
+  /* Footer: wie am Desktop/Tablet die Framer-Version (eigene Handy-Version entfernt) */
   .m-footer {
     display: block;
     background: #101b21;
@@ -427,7 +426,7 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
   justify-self: end; width: 100%; max-width: 640px; box-sizing: border-box;
   padding: 40px 40px 44px;
   background: #e4e7ed; color: #101b21;
-  border-radius: 8px;
+  border-radius: 0;
   box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
 }
 .c-form > div { max-width: none !important; }
@@ -459,3 +458,7 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
 /* Projektübersicht + Projektdetail: Header in #101B21 statt Blau (wie die Kontaktseite) */
 main[data-page="projects"] > * > *:first-child,
 main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #101b21 !important; }
+
+/* Footer: Instagram entfernt (alle Geräte) */
+.framer-footer a[href*="instagram.com"],
+.framer-footer *:has(> * > a[href*="instagram.com"]):not(:has(a:not([href*="instagram.com"]))) { display: none !important; }

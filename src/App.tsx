@@ -16,7 +16,6 @@ import Page404 from './framer/page-404'
 import ProjectDetail from './ProjectDetail'
 import { useFitHeadlines } from './fitHeadlines'
 import MobileHero from './MobileHero'
-import MobileFooter from './MobileFooter'
 
 const FULL = { style: { width: '100%' } } as const
 
@@ -64,7 +63,6 @@ export default function App() {
               variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
             />
           </div>
-          <MobileFooter />
         </>
       )}
     </UnframerProvider>
