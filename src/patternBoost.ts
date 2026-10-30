@@ -6,7 +6,7 @@ let queued = false
 const apply = () => {
   queued = false
   if (!phone.matches) return
-  document.querySelectorAll('main filter[id^="mono"]').forEach((f) => {
+  document.querySelectorAll('main filter[id^="mono"], #c-mono').forEach((f) => {
     const m = f.querySelector('feMorphology')
     if (m && m.getAttribute('radius') !== '1.6') m.setAttribute('radius', '1.6')
     const fl = f.querySelector('feFlood')

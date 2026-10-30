@@ -366,8 +366,76 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
       #101b21 100%
     ) !important;
   }
-  .m-hero__inner { padding: 0 40px 48px; }
+  .m-hero__inner { padding: 0 40px 24px; } /* Abstand unten = Abstand der Nav oben */
   .m-hero__eyebrow { font-size: 14px; margin-bottom: 18px; color: rgba(228, 231, 237, 0.78); }
   .m-hero__name { font-size: clamp(72px, 9.6vw, 176px); line-height: 0.9; }
   .m-hero__name br { display: none; }
+}
+
+/* ───────── Kontaktseite (eigene Version, alle Geräte) ───────── */
+.c-page { background: #e4e7ed; color: #101b21; font-family: "Geist", "Geist Placeholder", Inter, sans-serif; }
+
+/* Header wie „Umgesetzte Projekte“ */
+.c-head {
+  position: relative; overflow: hidden;
+  height: 380px; box-sizing: border-box;
+  padding: 32px 24px 40px;
+  background: #04004a;
+  display: flex; align-items: flex-end;
+}
+.c-head__title {
+  position: relative; z-index: 1; margin: 0;
+  font-size: 64px; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em;
+  text-transform: uppercase; color: #e4e7ed;
+  animation: m-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.c-head__pattern {
+  position: absolute; top: 76px; right: -12px;
+  width: 362px; height: 418px; overflow: visible; pointer-events: none;
+}
+
+/* Inhalt: links Einstieg + Links, rechts Formular – ohne Leerflächen */
+.c-body {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 64px; padding: 96px 24px 112px;
+  max-width: 1440px; margin: 0 auto; box-sizing: border-box;
+}
+.c-body > * { animation: m-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.c-body > :nth-child(2) { animation-delay: 120ms; }
+.c-intro { border-top: 1px solid rgba(16, 27, 33, 0.85); padding-top: 24px; }
+.c-label {
+  margin: 0 0 16px;
+  font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em;
+  text-transform: uppercase; color: #8a8a8a;
+}
+.c-title {
+  margin: 0;
+  font-size: clamp(32px, 3.4vw, 48px); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em;
+}
+.c-text { margin: 20px 0 0; max-width: 36ch; font-size: 16px; line-height: 1.5; color: rgba(16, 27, 33, 0.7); }
+.c-links { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1px solid rgba(16, 27, 33, 0.15); }
+.c-links li { border-bottom: 1px solid rgba(16, 27, 33, 0.15); }
+.c-links a {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0;
+  color: #101b21; text-decoration: none;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.012em; text-transform: uppercase;
+  transition: color 200ms, padding 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.c-links a svg { width: 16px; height: 16px; opacity: 0.55; }
+.c-links a:hover { color: #04004a; padding-left: 6px; }
+.c-form { display: flex; justify-content: flex-end; }
+.c-form > div { max-width: 640px !important; }
+
+@media (max-width: 1199.98px) {
+  .c-body { grid-template-columns: 1fr; gap: 56px; padding: 72px 24px 88px; }
+  .c-form { justify-content: flex-start; }
+  .c-form > div { max-width: none !important; }
+}
+@media (max-width: 809.98px) {
+  .c-head { height: 230px; }
+  .c-head__title { font-size: 44px; }
+  .c-head__pattern { top: 104px; right: 8px; width: 108px; height: 124px; }
+  .c-body { gap: 48px; padding: 48px 24px 64px; }
+  .c-links { margin-top: 32px; }
 }
