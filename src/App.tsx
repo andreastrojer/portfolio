@@ -42,7 +42,7 @@ export default function App() {
     document.title = TITLES[path] ?? 'Andreas Trojer'
     // iPhone: Statusleiste (Bereich um die Kamera) in der Farbe des oberen Seitenrands,
     // damit sie nahtlos ins Hero-Bild bzw. den blauen Header übergeht.
-    const top = path === '/' ? '#bdc1ca' : path.startsWith('/projects') || path === '/contact' ? '#04004a' : '#e4e7ed'
+    const top = path === '/' ? '#bdc1ca' : path === '/contact' ? '#101b21' : path.startsWith('/projects') ? '#04004a' : '#e4e7ed'
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', top)
     document.documentElement.style.backgroundColor = top
   }, [path])
@@ -55,13 +55,18 @@ export default function App() {
         {path === '/' && <MobileHero />}
         <Page path={path} />
       </main>
-      <div className="framer-footer">
-        <Footer.Responsive
-          style={{ width: '100%' }}
-          variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
-        />
-      </div>
-      <MobileFooter />
+      {/* Kontaktseite ohne Footer – der gleiche Inhalt steht dort schon */}
+      {path !== '/contact' && (
+        <>
+          <div className="framer-footer">
+            <Footer.Responsive
+              style={{ width: '100%' }}
+              variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
+            />
+          </div>
+          <MobileFooter />
+        </>
+      )}
     </UnframerProvider>
   )
 }
