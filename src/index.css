@@ -377,7 +377,7 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
   position: relative; overflow: hidden;
   min-height: 100vh; min-height: 100svh; box-sizing: border-box;
   display: flex; flex-direction: column;
-  padding: 150px 24px 24px;
+  padding: 150px 24px 96px;
   background: #101b21; color: #e4e7ed;
   font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
 }
@@ -394,7 +394,7 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
 }
 .c-meta time { color: #e4e7ed; font-variant-numeric: tabular-nums; }
 .c-big {
-  position: relative; margin: 28px 0 0;
+  position: relative; margin: 0;
   font-size: clamp(64px, 13.4vw, 232px); font-weight: 900;
   line-height: 0.86; letter-spacing: -0.045em; text-transform: uppercase;
   color: #fff;
@@ -431,10 +431,12 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
   box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
 }
 .c-form > div { max-width: none !important; }
+/* Kopfzeile „Kontaktformular / * Pflichtfeld“ ausblenden */
+.c-form form > div:first-child { display: none !important; }
 .c-bottom {
   position: relative;
   display: flex; justify-content: space-between;
-  margin-top: auto; padding-top: 96px;
+  margin-top: auto; padding-top: 96px; /* (nicht mehr verwendet) */
   font-size: 13px; color: rgba(228, 231, 237, 0.4);
 }
 
@@ -443,10 +445,10 @@ main[data-page="home"] [data-framer-name="Hero Section"] > .framer-1merria::afte
   .c-form { justify-self: stretch; max-width: none; }
 }
 @media (max-width: 809.98px) {
-  .c-page { padding: 120px 20px 24px; }
+  .c-page { padding: 120px 20px 56px; }
   .c-pattern { top: 84px; right: -40px; width: 220px; height: 254px; }
   .c-meta { font-size: 12px; }
-  .c-big { font-size: 25vw; margin-top: 20px; }
+  .c-big { font-size: 20vw; } /* „SCHREIB“ passt genau in die Breite */
   .c-br { display: inline; }
   .c-grid { margin-top: 36px; gap: 40px; }
   .c-form { padding: 28px 20px 32px; }
