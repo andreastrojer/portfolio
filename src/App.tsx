@@ -42,7 +42,7 @@ export default function App() {
     document.title = TITLES[path] ?? 'Andreas Trojer'
     // iPhone: Statusleiste (Bereich um die Kamera) in der Farbe des oberen Seitenrands,
     // damit sie nahtlos ins Hero-Bild bzw. den blauen Header übergeht.
-    const top = path === '/' ? '#bdc1ca' : path === '/contact' ? '#101b21' : path.startsWith('/projects') ? '#04004a' : '#e4e7ed'
+    const top = path === '/' ? '#bdc1ca' : path === '/contact' || path.startsWith('/projects') ? '#101b21' : '#e4e7ed'
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', top)
     document.documentElement.style.backgroundColor = top
   }, [path])

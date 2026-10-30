@@ -68,12 +68,8 @@ export default function ContactPage() {
           ))}
         </ul>
         <div className="c-form">
-          <ContactForm
-            ink="rgb(228, 231, 237)"
-            muted="rgba(228, 231, 237, 0.5)"
-            accent="rgb(228, 231, 237)"
-            accentInk="rgb(16, 27, 33)"
-          />
+          {/* helle Karte auf dunklem Grund – das Formular sticht klar heraus */}
+          <ContactForm accent="rgb(16, 27, 33)" accentInk="rgb(228, 231, 237)" />
         </div>
       </div>
 
