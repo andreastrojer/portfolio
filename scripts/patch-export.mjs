@@ -45,7 +45,7 @@ if (m) {
 // Startseite: "Lebenslauf herunterladen"-Button verlinkt auf die PDF in public/
 // (Framer kann auf eine Datei außerhalb des Projekts nicht verlinken).
 {
-  const CV = '/Lebenslauf_Andreas_Trojer.pdf'
+  const CV = '/Lebenslauf_Andreas_Trojer.pdf?v=20261031'
   let hp = fs.readFileSync(homeFile, 'utf8')
   if (!hp.includes(CV)) {
     hp = hp

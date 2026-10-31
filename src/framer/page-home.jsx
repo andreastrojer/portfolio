@@ -1360,7 +1360,7 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 													>
 														{_jsx(stdin_default3, {
 															suppressHydrationWarning: true,
-															DVgymW1UZ: "Lebenslauf herunterladen  \u2193", lcgy4wTv3: "/Lebenslauf_Andreas_Trojer.pdf", S79CLCuIT: true,
+															DVgymW1UZ: "Lebenslauf herunterladen  \u2193", lcgy4wTv3: "/Lebenslauf_Andreas_Trojer.pdf?v=20261031", S79CLCuIT: true,
 															height: "100%",
 															id: "OInnEGW1I",
 															layoutId: "OInnEGW1I",
