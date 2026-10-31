@@ -14,6 +14,7 @@ import PageProjects from './framer/page-projects'
 import ContactPage from './ContactPage'
 import Page404 from './framer/page-404'
 import ProjectDetail from './ProjectDetail'
+import { toCmsSlug } from './slugs'
 import { useFitHeadlines } from './fitHeadlines'
 import MobileHero from './MobileHero'
 
@@ -30,7 +31,7 @@ function Page({ path }: { path: string }) {
   if (path === '/projects') return <PageProjects.Responsive {...FULL} />
   if (path === '/contact') return <ContactPage />
   const m = path.match(/^\/projects\/([^/]+)$/)
-  if (m) return <ProjectDetail slug={decodeURIComponent(m[1])} />
+  if (m) return <ProjectDetail slug={toCmsSlug(decodeURIComponent(m[1]))} />
   return <Page404.Responsive {...FULL} />
 }
 
