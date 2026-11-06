@@ -138,13 +138,22 @@ export default function Nav({ path }: { path: string }) {
   // Kompakt-Modus: Sobald das Ende des Headers (erster Bereich der Seite) erreicht ist,
   // gleitet die Nav nach rechts und schrumpft auf Logo + Menüpunkt (Maße in index.css).
   useEffect(() => {
+    // Header = erster Bereich der Seite. Von <main> aus durch einzelne Hüllen nach unten gehen,
+    // bis eine Ebene mehrere Bereiche hat – davon ist der erste der Header.
+    // Startseite: Hero · Projekte: Titelbereich · Projektdetail: Hero · Kontakt: großer Titel
     const header = () => {
-      const list = document.querySelectorAll<HTMLElement>(
-        'main [data-framer-name="Hero Section"], main section, main > *',
-      )
-      for (const el of list) {
+      const visible = (el: Element) => {
         const r = el.getBoundingClientRect()
-        if (r.height > 0 && r.width > 0) return el
+        return r.height > 60 && r.width > 0
+      }
+      let el: Element | null = document.querySelector('main')
+      for (let i = 0; i < 6 && el; i++) {
+        const kids: Element[] = [...el.children].filter(visible)
+        if (kids.length === 1) {
+          el = kids[0]
+          continue
+        }
+        return kids[0] ?? null
       }
       return null
     }
