@@ -1235,9 +1235,9 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 																"var(--extracted-1of0zx5, var(--token-ae5a64aa-bf4e-4e59-85e9-93e8d8e1c064, rgb(4, 0, 74)))",
 														}}
 													>
-														{"Das Wissen\u2028\u2028"}
+														{"\xDCber\u2028\u2028"}
 														<motion.br suppressHydrationWarning={true} />
-														{"von mir."}
+														{"mich."}
 													</motion.h2>
 												</React.Fragment>
 											</RichText>
@@ -1282,7 +1282,7 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 														dir={"auto"}
 													>
 														{
-															"Ich bin Andreas Trojer und besuche die 5. Klasse der IT-Medientechnik an der HTL Villach. Ich entwickle Websites und Apps im Frontend und Backend und gestalte Web- und Printmedien."
+															"Ich bin Andreas Trojer und besuche die 5. Klasse der IT-Medientechnik an der HTL Villach. Im Frontend und Backend entwickle ich Websites und Apps, au\xDFerdem gestalte ich Web- und Printmedien."
 														}
 													</motion.p>
 													<motion.p
