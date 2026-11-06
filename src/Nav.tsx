@@ -197,11 +197,23 @@ export default function Nav({ path }: { path: string }) {
   // Framers eigene Tap-Logik nicht auslösen (sonst Doppel-Umschalten)
   const swallow = (e: PointerEvent) => {
     const t = e.target as HTMLElement
+    // kleine Nav: ganze Box ist ein Knopf – Framers eigene Links/Taps nicht auslösen
+    if (compactRef.current && !openRef.current) {
+      e.stopPropagation()
+      return
+    }
     if (t.closest(MENU) || t.closest('a')) e.stopPropagation()
   }
 
   const onClick = (e: MouseEvent) => {
     const t = e.target as HTMLElement
+    // kleine Nav: Tippen irgendwo auf die Box öffnet sofort das ganze Menü (auch aufs Logo)
+    if (compactRef.current && !openRef.current) {
+      e.preventDefault()
+      e.stopPropagation()
+      setOpen(true)
+      return
+    }
     const a = t.closest('a')
     if (a) {
       const href = a.getAttribute('href') || ''
