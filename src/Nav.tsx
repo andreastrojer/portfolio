@@ -194,6 +194,39 @@ export default function Nav({ path }: { path: string }) {
     }
   }, [open])
 
+  // Maus (Desktop): Menü öffnet schon beim Darüberfahren – in der kleinen Nav über der ganzen Box,
+  // oben im Hero über dem Menüpunkt. Verlässt die Maus die Nav, schließt es wieder.
+  // Touch-Geräte bleiben beim Antippen.
+  const hoverOpened = useRef(false)
+  const hoverTimer = useRef(0)
+  useEffect(() => {
+    if (!open) hoverOpened.current = false
+  }, [open])
+  useEffect(() => () => window.clearTimeout(hoverTimer.current), [])
+  const onPointerOver = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse') return
+    window.clearTimeout(hoverTimer.current)
+    if (openRef.current || animating.current) return
+    const t = e.target as HTMLElement
+    if (compactRef.current || t.closest(MENU)) {
+      hoverOpened.current = true
+      setOpen(true)
+    }
+  }
+  const onPointerLeave = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse' || !hoverOpened.current) return
+    const closeLater = () => {
+      hoverTimer.current = window.setTimeout(() => {
+        if (!hoverOpened.current) return
+        if (animating.current) return closeLater() // erst fertig aufklappen lassen
+        hoverOpened.current = false
+        setOpen(false)
+      }, 300)
+    }
+    window.clearTimeout(hoverTimer.current)
+    closeLater()
+  }
+
   // Framers eigene Tap-Logik nicht auslösen (sonst Doppel-Umschalten)
   const swallow = (e: PointerEvent) => {
     const t = e.target as HTMLElement
@@ -211,6 +244,7 @@ export default function Nav({ path }: { path: string }) {
     if (compactRef.current && !openRef.current) {
       e.preventDefault()
       e.stopPropagation()
+      hoverOpened.current = false // bewusst geklickt: offen lassen
       setOpen(true)
       return
     }
@@ -229,6 +263,11 @@ export default function Nav({ path }: { path: string }) {
     if (t.closest(MENU)) {
       e.preventDefault()
       e.stopPropagation()
+      // per Maus geöffnet und dann geklickt: offen lassen statt gleich wieder zu schließen
+      if (hoverOpened.current && (openRef.current || animating.current)) {
+        hoverOpened.current = false
+        return
+      }
       setOpen((o) => !o)
     }
   }
@@ -242,6 +281,8 @@ export default function Nav({ path }: { path: string }) {
       data-wide={wide || open ? 'true' : 'false'}
       onClickCapture={onClick}
       onPointerDownCapture={swallow}
+      onPointerOver={onPointerOver}
+      onPointerLeave={onPointerLeave}
       onPointerUpCapture={swallow}
     >
       <Navbar.Responsive
