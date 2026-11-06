@@ -1235,9 +1235,9 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 																"var(--extracted-1of0zx5, var(--token-ae5a64aa-bf4e-4e59-85e9-93e8d8e1c064, rgb(4, 0, 74)))",
 														}}
 													>
-														{"\xDCber\u2028\u2028"}
+														{"Was mich\u2028\u2028"}
 														<motion.br suppressHydrationWarning={true} />
-														{"mich."}
+														{"ausmacht."}
 													</motion.h2>
 												</React.Fragment>
 											</RichText>

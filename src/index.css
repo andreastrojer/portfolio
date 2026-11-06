@@ -463,3 +463,8 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 /* Footer: Instagram entfernt (alle Geräte) */
 .framer-footer a[href*="instagram.com"],
 .framer-footer *:has(> * > a[href*="instagram.com"]):not(:has(a:not([href*="instagram.com"]))) { display: none !important; }
+
+/* Navigation dünner – alle Geräte (vorher 74 px Desktop/Tablet, 64 px Handy, jetzt ca. 54 px) */
+.nav-shell nav [data-framer-name="Content"] { padding-top: 6px !important; padding-bottom: 6px !important; }
+.nav-shell nav [data-framer-name="Logo Wrapper"],
+.nav-shell nav [data-framer-name="Logo Wrapper"] > * { width: 30px !important; height: 40px !important; }
