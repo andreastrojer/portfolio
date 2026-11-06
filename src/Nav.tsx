@@ -239,7 +239,7 @@ export default function Nav({ path }: { path: string }) {
       className="nav-shell"
       data-open={open ? 'true' : 'false'}
       data-compact={compact ? 'true' : 'false'}
-      data-wide={wide ? 'true' : 'false'}
+      data-wide={wide || open ? 'true' : 'false'}
       onClickCapture={onClick}
       onPointerDownCapture={swallow}
       onPointerUpCapture={swallow}
