@@ -26,11 +26,33 @@ export default function Nav({ path }: { path: string }) {
   const openRef = useRef(false)
   openRef.current = open
 
+  // Kompakt-Modus (nach dem Header): Nav rechts, nur Logo + Menüpunkt.
+  // "wide" = Nav hat ihre volle Breite (offen oder gerade beim Auf-/Zuklappen) – bleibt dabei rechts.
+  const [compact, setCompact] = useState(false)
+  const compactRef = useRef(false)
+  compactRef.current = compact
+  const [wide, setWideState] = useState(false)
+  const wideRef = useRef(false)
+  wideRef.current = wide
+  const checkRef = useRef<() => void>(() => {})
+
   // Auf- und Zuklappen weich animieren (Framers Handy-Varianten springen sonst hart um)
   const setOpen = (next: boolean | ((o: boolean) => boolean)) => {
     const prev = openRef.current
     const value = typeof next === 'function' ? next(prev) : next
     if (value === prev || animating.current) return
+    // Öffnen aus dem kompakten Zustand: erst nach links auf volle Breite aufziehen
+    // (rechte Kante bleibt fix), danach den Inhalt aufklappen – sonst bricht der Text in 96 px um.
+    if (value && compactRef.current && !wideRef.current) {
+      animating.current = true
+      setWideState(true)
+      window.setTimeout(() => {
+        animating.current = false
+        setOpenState(true)
+      }, 400)
+      return
+    }
+    if (value) setWideState(true)
     const el = box()
     if (prev && !value && el && el.animate && custom()) {
       // Schließen: erst zuklappen, dann Variante wechseln
@@ -55,6 +77,7 @@ export default function Nav({ path }: { path: string }) {
         })
         anim.onfinish = () => {
           flushSync(() => setOpenState(false))
+          setWideState(false) // erst jetzt wieder schmal werden
           // Clip erst lösen, wenn die Nav wirklich auf zugeklappter Höhe ist
           const start = performance.now()
           const wait = () => {
@@ -72,6 +95,8 @@ export default function Nav({ path }: { path: string }) {
       }
     }
     setOpenState(value)
+    // Desktop schließt Framer selbst – danach wieder auf Kompakt-Breite
+    if (!value) window.setTimeout(() => !openRef.current && setWideState(false), 350)
   }
 
   useLayoutEffect(() => {
@@ -105,7 +130,54 @@ export default function Nav({ path }: { path: string }) {
   }, [open])
 
   // bei Seitenwechsel schließen
-  useEffect(() => setOpenState(false), [path])
+  useEffect(() => {
+    setOpenState(false)
+    setWideState(false)
+  }, [path])
+
+  // Kompakt-Modus: Sobald das Ende des Headers (erster Bereich der Seite) erreicht ist,
+  // gleitet die Nav nach rechts und schrumpft auf Logo + Menüpunkt (Maße in index.css).
+  useEffect(() => {
+    const header = () => {
+      const list = document.querySelectorAll<HTMLElement>(
+        'main [data-framer-name="Hero Section"], main section, main > *',
+      )
+      for (const el of list) {
+        const r = el.getBoundingClientRect()
+        if (r.height > 0 && r.width > 0) return el
+      }
+      return null
+    }
+    let frame = 0
+    const check = () => {
+      frame = 0
+      if (openRef.current || wideRef.current) return // offenes Menü nicht verschieben
+      const el = header()
+      const end = el ? el.getBoundingClientRect().bottom : window.innerHeight - window.scrollY
+      const navBottom = ref.current?.getBoundingClientRect().bottom ?? 80
+      // kleiner Puffer, damit die Nav an der Kante nicht hin- und herspringt (z. B. iPhone-Nachfedern)
+      setCompact((was) => (was ? end <= navBottom + 32 : end <= navBottom))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check)
+    }
+    checkRef.current = check
+    check()
+    const late = window.setTimeout(check, 400) // Seite rendert nach Seitenwechsel verzögert
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.clearTimeout(late)
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [path])
+
+  // nach dem Schließen prüfen, ob die Nav (noch) kompakt sein soll
+  useEffect(() => {
+    if (!wide) checkRef.current()
+  }, [wide])
 
   // Tippen außerhalb schließt das Menü
   useEffect(() => {
@@ -154,6 +226,8 @@ export default function Nav({ path }: { path: string }) {
       ref={ref}
       className="nav-shell"
       data-open={open ? 'true' : 'false'}
+      data-compact={compact ? 'true' : 'false'}
+      data-wide={wide ? 'true' : 'false'}
       onClickCapture={onClick}
       onPointerDownCapture={swallow}
       onPointerUpCapture={swallow}
