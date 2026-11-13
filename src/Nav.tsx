@@ -14,14 +14,15 @@ export default function Nav({ path }: { path: string }) {
   const closedHeight = useRef(0)
   const animating = useRef(false)
   const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
-  // nur Tablet & Handy – am Desktop animiert Framer selbst
+  // Auf allen Geräten (siehe custom())
   // Animiert wird die Box selbst (hat den Weichzeichner) – nicht der Rahmen drumherum,
   // sonst schaltet der Browser den Weichzeichner während der Animation kurz ab.
   const box = () =>
     ([...(ref.current?.querySelectorAll('nav') ?? [])].find((n) => n.getBoundingClientRect().width > 0) as
       | HTMLElement
       | undefined) || ref.current
-  const custom = () => typeof window !== 'undefined' && window.innerWidth < 1200
+  // Auf- und Zuklappen animieren wir auf allen Geräten selbst – Framers Desktop-Variante springt sonst hart um
+  const custom = () => typeof window !== 'undefined'
 
   const openRef = useRef(false)
   openRef.current = open
@@ -49,7 +50,7 @@ export default function Nav({ path }: { path: string }) {
       window.setTimeout(() => {
         animating.current = false
         setOpenState(true)
-      }, 400)
+      }, 280) // Inhalt startet schon, während die Box die letzten Pixel aufzieht
       return
     }
     if (value) setWideState(true)
@@ -113,15 +114,15 @@ export default function Nav({ path }: { path: string }) {
     if (h > from + 4 && el.animate && custom()) {
       el.animate(
         [{ clipPath: `inset(0 0 calc(100% - ${from}px) 0 round 8px)` }, { clipPath: 'inset(0 0 0% 0 round 8px)' }],
-        { duration: 520, easing: EASE },
+        { duration: 640, easing: EASE },
       )
       const items = [...el.querySelectorAll<HTMLElement>('a, [data-framer-name="Nav Links & Place"] img')].filter(
         (n) => n.getBoundingClientRect().top > el.getBoundingClientRect().top + from - 8,
       )
       items.forEach((n, i) =>
         n.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], {
-          duration: 420,
-          delay: 90 + i * 45,
+          duration: 520,
+          delay: 120 + i * 60,
           easing: EASE,
           fill: 'backwards',
         }),
