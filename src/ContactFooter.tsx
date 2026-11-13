@@ -3,7 +3,8 @@ import { lenis } from './smoothScroll'
 
 // Footer = Kontakt (ersetzt die frühere Kontaktseite /contact und den Framer-Footer).
 // Gestaltung wie der Bereich „Kompetenzfelder“: hell, große dunkelblaue Versalien.
-// Links: Profile & Lebenslauf · Rechts: Button, der eine E-Mail öffnet (kein eigenes Formular).
+// Links: Profile & Lebenslauf · Rechts: Fläche zwischen zwei schwarzen Linien, öffnet eine E-Mail
+// (kein eigenes Formular).
 // Erreichbar über den Menüpunkt „Kontakt“ und /#kontakt – alte Links auf /contact landen hier.
 const EMAIL = 'trojer.andi63@gmail.com'
 const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Anfrage über andreastrojer.at')}`
@@ -58,16 +59,16 @@ export default function ContactFooter() {
           </ul>
         </div>
 
-        <a className="cf__mail cf__reveal" href={MAILTO}>
-          <span className="cf__mail-label">Projekt, Praktikum oder einfach eine Frage?</span>
-          <span className="cf__mail-cta">
-            Nachricht
-            <br />
-            schreiben
-            <Arrow />
-          </span>
-          <span className="cf__mail-address">{EMAIL}</span>
-        </a>
+        <div className="cf__right cf__reveal">
+          <h6 className="cf__label">E-Mail</h6>
+          <a className="cf__mail" href={MAILTO}>
+            <span className="cf__mail-cta">
+              Nachricht schreiben
+              <Arrow />
+            </span>
+            <span className="cf__mail-address">{EMAIL}</span>
+          </a>
+        </div>
 
         <div className="cf__bottom">
           <span>© {new Date().getFullYear()} Andreas Trojer</span>

@@ -528,34 +528,41 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   transition: opacity 250ms, transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (hover: hover) {
-  .cf__links:hover a { opacity: 0.35; }
+  .cf__links:has(a:hover) a:not(:hover) { opacity: 0.35; }
   .cf__links a:hover { opacity: 1; }
   .cf__links a:hover svg { opacity: 1; transform: none; }
 }
 
-/* Mail-Button: dunkelblaue Fläche, so hoch wie die Linkliste */
+/* Mail-Bereich: keine Karte – offene Fläche zwischen zwei schwarzen Linien, so hoch wie die Linkliste.
+   Maus darüber: füllt sich von unten dunkelblau. */
+.cf__right { display: flex; flex-direction: column; }
 .cf__mail {
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
-  min-height: 260px; box-sizing: border-box;
-  padding: 28px 32px 30px;
-  border-radius: 10px;
-  background: #04004a; color: #e4e7ed; text-decoration: none;
-  transition: background-color 300ms;
+  position: relative; isolation: isolate;
+  flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+  padding: 20px 0 18px;
+  border-top: 1px solid #101b21; border-bottom: 1px solid #101b21;
+  color: #04004a; text-decoration: none;
+  transition: color 350ms, padding 450ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.cf__mail-label { font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em; text-transform: uppercase; color: rgba(228, 231, 237, 0.6); }
+.cf__mail::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: #04004a;
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
 .cf__mail-cta {
-  position: relative; align-self: flex-start;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
   font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase;
 }
 .cf__mail-cta svg {
-  display: inline-block; vertical-align: top;
-  width: 0.5em; height: 0.5em; margin: 0.08em 0 0 0.18em;
-  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  flex: none; width: 0.6em; height: 0.6em; margin-top: 0.05em;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.cf__mail-address { font-size: 15px; color: rgba(228, 231, 237, 0.75); }
+.cf__mail-address { font-size: 15px; color: #404040; transition: color 350ms; }
 @media (hover: hover) {
-  .cf__mail:hover { background: #101b21; }
+  .cf__mail:hover { color: #e4e7ed; padding-left: 20px; padding-right: 20px; }
+  .cf__mail:hover::before { transform: scaleY(1); }
+  .cf__mail:hover .cf__mail-address { color: rgba(228, 231, 237, 0.75); }
   .cf__mail:hover .cf__mail-cta svg { transform: translate(4px, -4px); }
 }
 .cf__mail:focus-visible { outline: 2px solid #04004a; outline-offset: 4px; }
@@ -576,7 +583,7 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 /* Einblenden beim Hineinscrollen */
 .cf__reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1); }
 .cf.is-in .cf__reveal { opacity: 1; transform: none; }
-.cf.is-in .cf__mail.cf__reveal { transition: opacity 800ms 150ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms 150ms cubic-bezier(0.22, 1, 0.36, 1), background-color 300ms; }
+.cf.is-in .cf__right.cf__reveal { transition-delay: 150ms; }
 
 @media (max-width: 1199.98px) {
   .cf__links a, .cf__mail-cta { font-size: 44px; }
@@ -584,7 +591,8 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 @media (max-width: 809.98px) {
   .cf__inner { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
   .cf__links a, .cf__mail-cta { font-size: 32px; }
-  .cf__mail { min-height: 200px; padding: 22px 22px 24px; }
+  .cf__mail { min-height: 150px; }
+  .cf__mail-cta svg { width: 0.7em; height: 0.7em; }
   .cf__mail-address { font-size: 14px; }
   .cf__bottom { margin-top: 24px; font-size: 12px; }
 }
