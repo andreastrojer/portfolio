@@ -2,7 +2,7 @@ import './framer/styles.css'
 
 import { UnframerProvider } from 'unframer'
 import { useEffect } from 'react'
-import { navigate, usePathname } from './router'
+import { findTarget, navigate, usePathname } from './router'
 
 import Nav from './Nav'
 import './touchCards'
@@ -47,10 +47,10 @@ export default function App() {
 
   // Direkt mit Anker geöffnet (z. B. alte Adresse /contact → /#kontakt): nach dem Laden hinscrollen
   useEffect(() => {
-    const id = window.location.hash.slice(1)
-    if (!id) return
+    const hash = window.location.hash
+    if (!hash) return
     const t = window.setTimeout(() => {
-      const el = document.getElementById(id)
+      const el = findTarget(hash)
       if (el) lenis.scrollTo(el, { immediate: true })
     }, 600)
     return () => window.clearTimeout(t)

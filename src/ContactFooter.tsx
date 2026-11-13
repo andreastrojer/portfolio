@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react'
-import { ContactForm } from './framer/chunks/chunk-7A6ILFT3.js'
 import { lenis } from './smoothScroll'
 
 // Footer = Kontakt (ersetzt die frühere Kontaktseite /contact und den Framer-Footer).
-// Gestaltung wie der Bereich „Kompetenzfelder“: hell, zentriert, große dunkelblaue Versalien.
+// Gestaltung wie der Bereich „Kompetenzfelder“: hell, große dunkelblaue Versalien.
+// Links: Profile & Lebenslauf · Rechts: Button, der eine E-Mail öffnet (kein eigenes Formular).
 // Erreichbar über den Menüpunkt „Kontakt“ und /#kontakt – alte Links auf /contact landen hier.
+const EMAIL = 'trojer.andi63@gmail.com'
+const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Anfrage über andreastrojer.at')}`
+
 const LINKS = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andreas-trojer-7981a0377/' },
   { label: 'GitHub', href: 'https://github.com/andreastrojer' },
@@ -41,7 +44,7 @@ export default function ContactFooter() {
   return (
     <footer ref={ref} id="kontakt" className="cf">
       <div className="cf__inner">
-        <div className="cf__reveal">
+        <div className="cf__left cf__reveal">
           <h6 className="cf__label">Kontakt</h6>
           <ul className="cf__links">
             {LINKS.map((l) => (
@@ -55,9 +58,16 @@ export default function ContactFooter() {
           </ul>
         </div>
 
-        <div className="cf__form cf__reveal">
-          <ContactForm accent="rgb(4, 0, 74)" accentInk="rgb(228, 231, 237)" />
-        </div>
+        <a className="cf__mail cf__reveal" href={MAILTO}>
+          <span className="cf__mail-label">Projekt, Praktikum oder einfach eine Frage?</span>
+          <span className="cf__mail-cta">
+            Nachricht
+            <br />
+            schreiben
+            <Arrow />
+          </span>
+          <span className="cf__mail-address">{EMAIL}</span>
+        </a>
 
         <div className="cf__bottom">
           <span>© {new Date().getFullYear()} Andreas Trojer</span>

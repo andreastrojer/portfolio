@@ -495,21 +495,26 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   .nav-shell { transition: none !important; }
 }
 
-/* ───────── Footer = Kontakt · Design wie „Kompetenzfelder“ (hell, zentriert, dunkelblaue Versalien) ───────── */
+/* ───────── Footer = Kontakt · Design wie „Kompetenzfelder“ (hell, dunkelblaue Versalien) ─────────
+   Links: Profile & Lebenslauf · Rechts: Mail-Button (öffnet das E-Mail-Programm) */
 .cf {
   position: relative;
+  margin-top: -1px; /* keine Haarlinie zwischen Seite und Footer (Rundung an der Kante) */
   padding: 0 20px 28px;
   background: #e4e7ed; color: #04004a;
   font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
-  text-align: center;
 }
-.cf__inner { padding: 72px 0 0; border-top: 1px solid rgba(16, 27, 33, 0.12); }
+.cf__inner {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px; align-items: stretch;
+  padding-top: 56px;
+}
 .cf__label {
   margin: 0 0 24px;
   font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em;
   text-transform: uppercase; color: #8a8a8a;
 }
-.cf__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.cf__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
 .cf__links a {
   position: relative; display: inline-block;
   font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.03em;
@@ -527,16 +532,38 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   .cf__links a:hover { opacity: 1; }
   .cf__links a:hover svg { opacity: 1; transform: none; }
 }
-.cf__form {
-  max-width: 640px; margin: 72px auto 0;
-  text-align: left;
+
+/* Mail-Button: dunkelblaue Fläche, so hoch wie die Linkliste */
+.cf__mail {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  min-height: 260px; box-sizing: border-box;
+  padding: 28px 32px 30px;
+  border-radius: 10px;
+  background: #04004a; color: #e4e7ed; text-decoration: none;
+  transition: background-color 300ms;
 }
-.cf__form > div { max-width: none !important; }
-/* Kopfzeile „Kontaktformular / * Pflichtfeld“ ausblenden */
-.cf__form form > div:first-child { display: none !important; }
+.cf__mail-label { font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em; text-transform: uppercase; color: rgba(228, 231, 237, 0.6); }
+.cf__mail-cta {
+  position: relative; align-self: flex-start;
+  font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase;
+}
+.cf__mail-cta svg {
+  display: inline-block; vertical-align: top;
+  width: 0.5em; height: 0.5em; margin: 0.08em 0 0 0.18em;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cf__mail-address { font-size: 15px; color: rgba(228, 231, 237, 0.75); }
+@media (hover: hover) {
+  .cf__mail:hover { background: #101b21; }
+  .cf__mail:hover .cf__mail-cta svg { transform: translate(4px, -4px); }
+}
+.cf__mail:focus-visible { outline: 2px solid #04004a; outline-offset: 4px; }
+
 .cf__bottom {
+  grid-column: 1 / -1;
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  margin-top: 96px; padding-top: 20px;
+  margin-top: 56px; padding-top: 20px;
   border-top: 1px solid rgba(16, 27, 33, 0.12);
   font-size: 13px; color: #8a8a8a;
 }
@@ -545,18 +572,21 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   font: inherit; color: inherit; transition: color 200ms;
 }
 .cf__bottom button:hover { color: #04004a; }
+
 /* Einblenden beim Hineinscrollen */
 .cf__reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1); }
 .cf.is-in .cf__reveal { opacity: 1; transform: none; }
-.cf.is-in .cf__form.cf__reveal { transition-delay: 150ms; }
+.cf.is-in .cf__mail.cf__reveal { transition: opacity 800ms 150ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms 150ms cubic-bezier(0.22, 1, 0.36, 1), background-color 300ms; }
+
 @media (max-width: 1199.98px) {
-  .cf__links a { font-size: 44px; }
+  .cf__links a, .cf__mail-cta { font-size: 44px; }
 }
 @media (max-width: 809.98px) {
-  .cf__inner { padding-top: 56px; }
-  .cf__links a { font-size: 32px; }
-  .cf__form { margin-top: 48px; }
-  .cf__bottom { margin-top: 64px; font-size: 12px; }
+  .cf__inner { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
+  .cf__links a, .cf__mail-cta { font-size: 32px; }
+  .cf__mail { min-height: 200px; padding: 22px 22px 24px; }
+  .cf__mail-address { font-size: 14px; }
+  .cf__bottom { margin-top: 24px; font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cf__reveal { opacity: 1; transform: none; transition: none; }

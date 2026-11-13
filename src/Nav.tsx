@@ -265,6 +265,12 @@ export default function Nav({ path }: { path: string }) {
       if (internal && a.target !== '_blank') {
         e.preventDefault()
         e.stopPropagation()
+        // „Über mich“: Framers Sprungziel geht beim Export verloren (Link zeigt nur auf "/") →
+        // selbst zum Über-mich-Bereich der Startseite springen
+        if (/^\s*über\s+mich\s*$/i.test(a.textContent || '')) {
+          navigate('/#ueber-mich')
+          return
+        }
         navigate(new URL(href, window.location.href).pathname + new URL(href, window.location.href).hash)
       }
       return
