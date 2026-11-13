@@ -500,17 +500,17 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 .cf {
   position: relative;
   margin-top: -1px; /* keine Haarlinie zwischen Seite und Footer (Rundung an der Kante) */
-  padding: 0 20px 28px;
+  padding: 0 20px 24px;
   background: #d3d7df; color: #04004a; /* Light Gray aus dem Brand-Manual – eine Stufe dunkler als die Seite */
   font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
 }
 .cf__inner {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 40px; align-items: stretch;
-  padding-top: 72px;
+  padding-top: 48px;
 }
 .cf__label {
-  margin: 0 0 24px;
+  margin: 0 0 16px;
   font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em;
   text-transform: uppercase; color: #6b6b6b;
 }
@@ -539,7 +539,7 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 .cf__mail {
   position: relative; isolation: isolate;
   flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
-  padding: 20px 0 18px;
+  padding: 16px 0 14px;
   border-top: 1px solid #04004a; border-bottom: 1px solid #04004a;
   color: #04004a; text-decoration: none;
   transition: color 350ms, padding 450ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -570,8 +570,7 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 .cf__bottom {
   grid-column: 1 / -1;
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  margin-top: 56px; padding-top: 20px;
-  border-top: 1px solid rgba(4, 0, 74, 0.14);
+  margin-top: 40px;
   font-size: 13px; color: #6b6b6b;
 }
 .cf__bottom button {
@@ -589,12 +588,12 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   .cf__links a, .cf__mail-cta { font-size: 44px; }
 }
 @media (max-width: 809.98px) {
-  .cf__inner { grid-template-columns: 1fr; gap: 40px; padding-top: 56px; }
+  .cf__inner { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; }
   .cf__links a, .cf__mail-cta { font-size: 32px; }
   .cf__mail { min-height: 150px; }
   .cf__mail-cta svg { width: 0.7em; height: 0.7em; }
   .cf__mail-address { font-size: 14px; }
-  .cf__bottom { margin-top: 24px; font-size: 12px; }
+  .cf__bottom { margin-top: 8px; font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cf__reveal { opacity: 1; transform: none; transition: none; }
