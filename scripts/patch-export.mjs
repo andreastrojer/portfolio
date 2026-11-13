@@ -91,4 +91,32 @@ if (m) {
   hp = hp.replace(/\{"Ausgew(?:\\xE4|ä)hlte "\}\s*<motion\.br\s+suppressHydrationWarning=\{true\}\s*\/>\s*/g, '')
   fs.writeFileSync(homeFile, hp)
 }
+// Startseite „Arbeiten“: an 3. Stelle Aureon statt XXX Zero.
+// Framer zeigt einfach die ersten 4 Projekte der Sammlung – wir holen alle und tauschen aus.
+// Weitere Tausche: links CMS-Slug, der raus soll, rechts der, der stattdessen kommt (siehe src/slugs.ts).
+{
+  let hp = fs.readFileSync(homeFile, 'utf8')
+  if (!hp.includes('homeProjects(')) {
+    hp = hp.replace(/(var query1 = \(\) => \(\{[\s\S]*?limit: \{\s*type: "LiteralValue",\s*value: )4(,)/, '$1100$2')
+    hp = hp.replace(
+      /var QueryData = /,
+      `var HOME_SWAP = { norde: "bloom" };
+var homeProjects = (list) => {
+	if (!Array.isArray(list)) return list;
+	const bySlug = (s) => list.find((p) => p.uozpq3MDw === s);
+	const out = list.slice(0, 4).map((p) => (HOME_SWAP[p.uozpq3MDw] && bySlug(HOME_SWAP[p.uozpq3MDw])) || p);
+	return out;
+};
+var QueryData = `,
+    )
+    hp = hp.replace(
+      /(query=\{query1\(\)\}\s*>\s*\{\(collection, paginationInfo, loadMore\) => \{\s*return \(\s*<_Fragment>\s*\{)collection\?\.map\(/,
+      '$1homeProjects(collection)?.map(',
+    )
+    fs.writeFileSync(homeFile, hp)
+  }
+  if (!hp.includes('homeProjects(collection)') || !hp.includes('value: 100,'))
+    console.warn('Startseite: Projekt-Tausch (Aureon statt XXX Zero) nicht vollständig angewendet')
+}
+
 console.log('Export-Korrekturen angewendet')

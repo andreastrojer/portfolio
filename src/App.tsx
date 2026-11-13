@@ -8,10 +8,10 @@ import Nav from './Nav'
 import './touchCards'
 import './heroAutoTrail'
 import './patternBoost'
-import Footer from './framer/footer'
 import PageHome from './framer/page-home'
 import PageProjects from './framer/page-projects'
-import ContactPage from './ContactPage'
+import ContactFooter from './ContactFooter'
+import { lenis } from './smoothScroll'
 import Page404 from './framer/page-404'
 import ProjectDetail from './ProjectDetail'
 import { toCmsSlug } from './slugs'
@@ -23,13 +23,11 @@ const FULL = { style: { width: '100%' } } as const
 const TITLES: Record<string, string> = {
   '/': 'Andreas Trojer',
   '/projects': 'Projekte – Andreas Trojer',
-  '/contact': 'Kontakt – Andreas Trojer',
 }
 
 function Page({ path }: { path: string }) {
   if (path === '/') return <PageHome.Responsive {...FULL} />
   if (path === '/projects') return <PageProjects.Responsive {...FULL} />
-  if (path === '/contact') return <ContactPage />
   const m = path.match(/^\/projects\/([^/]+)$/)
   if (m) return <ProjectDetail slug={toCmsSlug(decodeURIComponent(m[1]))} />
   return <Page404.Responsive {...FULL} />
@@ -42,10 +40,21 @@ export default function App() {
     document.title = TITLES[path] ?? 'Andreas Trojer'
     // iPhone: Statusleiste (Bereich um die Kamera) in der Farbe des oberen Seitenrands,
     // damit sie nahtlos ins Hero-Bild bzw. den blauen Header übergeht.
-    const top = path === '/' ? '#bdc1ca' : path === '/contact' || path.startsWith('/projects') ? '#101b21' : '#e4e7ed'
+    const top = path === '/' ? '#bdc1ca' : path.startsWith('/projects') ? '#101b21' : '#e4e7ed'
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', top)
     document.documentElement.style.backgroundColor = top
   }, [path])
+
+  // Direkt mit Anker geöffnet (z. B. alte Adresse /contact → /#kontakt): nach dem Laden hinscrollen
+  useEffect(() => {
+    const id = window.location.hash.slice(1)
+    if (!id) return
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(id)
+      if (el) lenis.scrollTo(el, { immediate: true })
+    }, 600)
+    return () => window.clearTimeout(t)
+  }, [])
 
   return (
     <UnframerProvider navigate={navigate}>
@@ -55,17 +64,8 @@ export default function App() {
         {path === '/' && <MobileHero />}
         <Page path={path} />
       </main>
-      {/* Kontaktseite ohne Footer – der gleiche Inhalt steht dort schon */}
-      {path !== '/contact' && (
-        <>
-          <div className="framer-footer">
-            <Footer.Responsive
-              style={{ width: '100%' }}
-              variants={{ base: 'Mobile', md: 'Tabket', xl: 'Desktop' } as any}
-            />
-          </div>
-        </>
-      )}
+      {/* Footer = Kontakt (ersetzt die frühere Kontaktseite) */}
+      <ContactFooter />
     </UnframerProvider>
   )
 }

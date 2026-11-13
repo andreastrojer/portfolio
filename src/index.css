@@ -494,3 +494,35 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 @media (prefers-reduced-motion: reduce) {
   .nav-shell { transition: none !important; }
 }
+
+/* ───────── Footer = Kontakt (frühere Kontaktseite) ───────── */
+.c-footer { min-height: 0; padding: 120px 24px 28px; }
+.c-label {
+  position: relative; margin: 0 0 20px;
+  font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em;
+  text-transform: uppercase; color: rgba(228, 231, 237, 0.55);
+}
+/* Einblenden erst, wenn der Footer sichtbar wird */
+.c-footer:not(.is-in) .c-big,
+.c-footer:not(.is-in) .c-grid { animation-play-state: paused; }
+.c-footer .c-bottom {
+  margin-top: 112px; padding-top: 20px;
+  border-top: 1px solid rgba(228, 231, 237, 0.12);
+  align-items: center;
+}
+.c-bottom button {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: inherit; transition: color 200ms;
+}
+.c-bottom button:hover { color: #e4e7ed; }
+@media (max-width: 809.98px) {
+  .c-footer { padding: 88px 20px 24px; }
+  .c-footer .c-bottom { margin-top: 64px; }
+}
+
+/* Kompetenzfelder: ohne Hintergrundbild, kompakter, Schrift dunkelblau wie die Überschriften */
+[data-framer-name="Service Section"] { min-height: 0 !important; height: auto !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+[data-framer-name="Service Section"] > [data-framer-name="Bg Image Wrapper"] { display: none !important; }
+[data-framer-name="Service Section"] > [data-framer-name="Content"] { padding-top: 48px !important; padding-bottom: 96px !important; }
+[data-framer-name="Service Section"] [data-framer-name="Wrapper"] { gap: 16px !important; }
+[data-framer-name="Service Section"] h1 { --framer-text-color: #04004a !important; color: #04004a !important; }

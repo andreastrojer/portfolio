@@ -369,7 +369,7 @@ var query1 = () => ({
 	},
 	limit: {
 		type: "LiteralValue",
-		value: 4,
+		value: 100,
 	},
 	select: [
 		{
@@ -409,6 +409,13 @@ var query1 = () => ({
 		},
 	],
 });
+var HOME_SWAP = { norde: "bloom" };
+var homeProjects = (list) => {
+	if (!Array.isArray(list)) return list;
+	const bySlug = (s) => list.find((p) => p.uozpq3MDw === s);
+	const out = list.slice(0, 4).map((p) => (HOME_SWAP[p.uozpq3MDw] && bySlug(HOME_SWAP[p.uozpq3MDw])) || p);
+	return out;
+};
 var QueryData = ({ query: query4, pageSize, children }) => {
 	const data = useQueryData(query4);
 	return children(data);
@@ -959,7 +966,7 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 													{(collection, paginationInfo, loadMore) => {
 														return (
 															<_Fragment>
-																{collection?.map(
+																{homeProjects(collection)?.map(
 																	(
 																		{
 																			ALWJAxPTG: ALWJAxPTGyAlGUg_Yx2,

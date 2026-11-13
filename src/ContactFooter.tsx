@@ -1,7 +1,9 @@
+import { useEffect, useRef } from 'react'
 import { ContactForm } from './framer/chunks/chunk-7A6ILFT3.js'
+import { lenis } from './smoothScroll'
 
-// Kontaktseite: dunkel (#101B21 wie der Hero-Verlauf), große Typo wie der Name im Hero,
-// nummerierte Links wie die Ordner-Karten auf der Startseite, Formular auf heller Karte.
+// Footer = Kontakt (ersetzt die frühere Kontaktseite /contact und den Framer-Footer).
+// Erreichbar über den Menüpunkt „Kontakt“ und /#kontakt – alte Links auf /contact landen hier.
 const LINKS = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andreas-trojer-7981a0377/' },
   { label: 'GitHub', href: 'https://github.com/andreastrojer' },
@@ -17,9 +19,28 @@ const Arrow = () => (
   </svg>
 )
 
-export default function ContactPage() {
+export default function ContactFooter() {
+  const ref = useRef<HTMLElement>(null)
+
+  // Überschrift und Inhalt erst einblenden, wenn der Footer ins Bild kommt
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.classList.add('is-in')
+          io.disconnect()
+        }
+      },
+      { threshold: 0.15 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
-    <div className="c-page">
+    <footer ref={ref} id="kontakt" className="c-page c-footer">
       <svg className="c-pattern" viewBox="0 0 249 287" aria-hidden="true">
         <defs>
           <filter id="c-mono" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
@@ -32,11 +53,12 @@ export default function ContactPage() {
         <image href={PATTERN} x="0" y="0" width="249" height="287" filter="url(#c-mono)" />
       </svg>
 
-      <h1 className="c-big">
+      <h6 className="c-label">Kontakt</h6>
+      <h2 className="c-big">
         Schreib{' '}
         <br className="c-br" />
         mir.
-      </h1>
+      </h2>
 
       <div className="c-grid">
         <ul className="c-links">
@@ -51,11 +73,16 @@ export default function ContactPage() {
           ))}
         </ul>
         <div className="c-form">
-          {/* helle Karte auf dunklem Grund – das Formular sticht klar heraus */}
           <ContactForm accent="rgb(16, 27, 33)" accentInk="rgb(228, 231, 237)" />
         </div>
       </div>
 
-    </div>
+      <div className="c-bottom">
+        <span>© {new Date().getFullYear()} Andreas Trojer</span>
+        <button type="button" onClick={() => lenis.scrollTo(0)}>
+          Nach oben ↑
+        </button>
+      </div>
+    </footer>
   )
 }

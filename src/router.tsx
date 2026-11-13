@@ -12,7 +12,17 @@ export function navigate(to: string) {
     window.location.href = to
     return
   }
-  if (url.pathname + url.search + url.hash === window.location.pathname + window.location.search + window.location.hash) return
+  // Kontakt ist keine eigene Seite mehr, sondern der Footer jeder Seite → dorthin scrollen
+  if (url.pathname.replace(/\/+$/, '') === '/contact') {
+    url.pathname = window.location.pathname
+    url.search = window.location.search
+    url.hash = '#kontakt'
+  }
+  if (url.pathname + url.search + url.hash === window.location.pathname + window.location.search + window.location.hash) {
+    const el = url.hash && document.getElementById(url.hash.slice(1))
+    if (el) lenis.scrollTo(el)
+    return
+  }
   const samePage = url.pathname === window.location.pathname
   const go = () => {
     flushSync(() => {
@@ -33,6 +43,10 @@ export function navigate(to: string) {
 
 // alte Adresse (z. B. /projects/bloom) in der Adresszeile still auf die neue umstellen
 function fixAddress() {
+  // alte Kontaktseite → Startseite, Footer (Kontakt)
+  if (window.location.pathname.replace(/\/+$/, '') === '/contact') {
+    window.history.replaceState(window.history.state, '', '/#kontakt')
+  }
   const pretty = prettyPath(window.location.pathname)
   if (pretty !== window.location.pathname)
     window.history.replaceState(window.history.state, '', pretty + window.location.search + window.location.hash)
