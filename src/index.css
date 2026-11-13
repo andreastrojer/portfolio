@@ -516,12 +516,12 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   display: flex; align-items: center; white-space: nowrap;
   font-size: 88px; font-weight: 900; line-height: 1; letter-spacing: -0.035em; text-transform: uppercase;
 }
-.cf__band-star { font-size: 0.42em; margin: 0 0.6em; opacity: 0.55; transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+.cf__band-logo { flex: none; height: 1.05em; width: auto; margin: 0 0.5em; opacity: 1; transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
 @keyframes cf-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (hover: hover) {
   .cf__band:hover { background: #101b21; }
   .cf__band:hover .cf__band-track { animation-duration: 14s; }
-  .cf__band:hover .cf__band-star { transform: rotate(90deg); }
+  .cf__band:hover .cf__band-logo { transform: scale(1.12) rotate(-6deg); }
 }
 .cf__band:focus-visible { outline: 2px solid #04004a; outline-offset: 4px; }
 

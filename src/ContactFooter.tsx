@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { lenis } from './smoothScroll'
 
 // Footer = Kontakt (ersetzt die frühere Kontaktseite /contact und den Framer-Footer).
-// Oben ein dunkelblaues Laufband „Nachricht schreiben ✦“ – das ganze Band öffnet eine E-Mail.
+// Oben ein dunkelblaues Laufband „Nachricht schreiben“ mit dem AJ-Monogramm dazwischen – das ganze Band öffnet eine E-Mail.
 // Darunter vier Spalten: E-Mail · Profile · Lebenslauf · Standort (mit Ortszeit).
 // Erreichbar über den Menüpunkt „Kontakt“ und /#kontakt – alte Links auf /contact landen hier.
 const EMAIL = 'andreas.trojer@gmail.com'
 const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Anfrage über andreastrojer.at')}`
 const CV = '/Lebenslauf_Andreas_Trojer.pdf?v=20261113'
+const LOGO = '/assets-framerusercontent-com/images/YoHwlzW0DngKFOXEK6rsGwIjaWg.svg' // AJ-Monogramm (hell)
 
 const PROFILES = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andreas-trojer-7981a0377/' },
@@ -57,7 +58,8 @@ export default function ContactFooter() {
   // Laufband-Text: 4× pro Hälfte, zwei gleiche Hälften → nahtlose Schleife
   const half = Array.from({ length: 4 }, (_, i) => (
     <span key={i} className="cf__band-item">
-      Nachricht schreiben<span className="cf__band-star">✦</span>
+      Nachricht schreiben
+      <img className="cf__band-logo" src={LOGO} alt="" />
     </span>
   ))
 
