@@ -495,82 +495,63 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   .nav-shell { transition: none !important; }
 }
 
-/* ───────── Footer = Kontakt · Aufbau wie „Kompetenzfelder“, Hintergrund eine Stufe dunkler (#D3D7DF) ─────────
-   Links: Profile & Lebenslauf · Rechts: Mail-Button (öffnet das E-Mail-Programm) */
+/* ───────── Footer = Kontakt: Laufband (Mail-Button) + vier Spalten, hell wie die Seite ───────── */
 .cf {
   position: relative;
   margin-top: -1px; /* keine Haarlinie zwischen Seite und Footer (Rundung an der Kante) */
-  padding: 0 20px 24px;
-  background: #d3d7df; color: #04004a; /* Light Gray aus dem Brand-Manual – eine Stufe dunkler als die Seite */
+  background: #e4e7ed; color: #04004a;
   font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
 }
-.cf__inner {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 40px; align-items: stretch;
-  padding-top: 48px;
+
+/* Laufband – das ganze Band ist der Mail-Button */
+.cf__band {
+  display: block; overflow: hidden;
+  padding: 22px 0;
+  background: #04004a; color: #e4e7ed; text-decoration: none;
+  transition: background-color 300ms;
+}
+.cf__band-track { display: flex; width: max-content; animation: cf-marquee 28s linear infinite; }
+.cf__band-half { display: flex; flex: none; }
+.cf__band-item {
+  display: flex; align-items: center; white-space: nowrap;
+  font-size: 88px; font-weight: 900; line-height: 1; letter-spacing: -0.035em; text-transform: uppercase;
+}
+.cf__band-star { font-size: 0.42em; margin: 0 0.6em; opacity: 0.55; transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes cf-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (hover: hover) {
+  .cf__band:hover { background: #101b21; }
+  .cf__band:hover .cf__band-track { animation-duration: 14s; }
+  .cf__band:hover .cf__band-star { transform: rotate(90deg); }
+}
+.cf__band:focus-visible { outline: 2px solid #04004a; outline-offset: 4px; }
+
+/* Vier Spalten */
+.cf__grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px;
+  padding: 48px 20px 0;
 }
 .cf__label {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em;
-  text-transform: uppercase; color: #6b6b6b;
+  text-transform: uppercase; color: #8a8a8a;
 }
-.cf__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
-.cf__links a {
-  position: relative; display: inline-block;
-  font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.03em;
-  text-transform: uppercase; color: #04004a; text-decoration: none;
-  transition: opacity 300ms;
+.cf__link, .cf__text {
+  display: flex; align-items: center; gap: 6px; width: fit-content;
+  margin: 0; font-size: 20px; font-weight: 600; line-height: 1.45; letter-spacing: -0.015em;
+  color: #04004a; text-decoration: none; white-space: nowrap;
 }
-.cf__links a svg {
-  position: absolute; top: 0.12em; right: -0.55em;
-  width: 0.36em; height: 0.36em;
-  opacity: 0; transform: translate(-6px, 6px);
-  transition: opacity 250ms, transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
-}
+.cf__link { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+.cf__arrow { width: 0.75em; height: 0.75em; flex: none; transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1); }
 @media (hover: hover) {
-  .cf__links:has(a:hover) a:not(:hover) { opacity: 0.35; }
-  .cf__links a:hover { opacity: 1; }
-  .cf__links a:hover svg { opacity: 1; transform: none; }
+  .cf__link:hover { background-size: 100% 1.5px; }
+  .cf__link:hover .cf__arrow { transform: translate(2px, -2px); }
 }
+.cf__sub { margin: 2px 0 0; font-size: 16px; line-height: 1.45; color: #404040; font-variant-numeric: tabular-nums; }
 
-/* Mail-Bereich: keine Karte – offene Fläche zwischen zwei Linien, so hoch wie die Linkliste.
-   Maus darüber: füllt sich von unten dunkelblau. */
-.cf__right { display: flex; flex-direction: column; }
-.cf__mail {
-  position: relative; isolation: isolate;
-  flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
-  padding: 16px 0 14px;
-  border-top: 1px solid #04004a; border-bottom: 1px solid #04004a;
-  color: #04004a; text-decoration: none;
-  transition: color 350ms, padding 450ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.cf__mail::before {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background: #04004a;
-  transform: scaleY(0); transform-origin: bottom;
-  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.cf__mail-cta {
-  display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
-  font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase;
-}
-.cf__mail-cta svg {
-  flex: none; width: 0.6em; height: 0.6em; margin-top: 0.05em;
-  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.cf__mail-address { font-size: 15px; color: #404040; transition: color 350ms; }
-@media (hover: hover) {
-  .cf__mail:hover { color: #e4e7ed; padding-left: 20px; padding-right: 20px; }
-  .cf__mail:hover::before { transform: scaleY(1); }
-  .cf__mail:hover .cf__mail-address { color: rgba(228, 231, 237, 0.75); }
-  .cf__mail:hover .cf__mail-cta svg { transform: translate(4px, -4px); }
-}
-.cf__mail:focus-visible { outline: 2px solid #04004a; outline-offset: 4px; }
-
+/* Copyright – nah am Inhalt */
 .cf__bottom {
-  grid-column: 1 / -1;
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  margin-top: 40px;
+  padding: 36px 20px 24px;
   font-size: 13px; color: #6b6b6b;
 }
 .cf__bottom button {
@@ -580,22 +561,25 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
 .cf__bottom button:hover { color: #04004a; }
 
 /* Einblenden beim Hineinscrollen */
-.cf__reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1); }
+.cf__reveal { opacity: 0; transform: translate3d(0, 20px, 0); transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1); }
 .cf.is-in .cf__reveal { opacity: 1; transform: none; }
-.cf.is-in .cf__right.cf__reveal { transition-delay: 150ms; }
 
 @media (max-width: 1199.98px) {
-  .cf__links a, .cf__mail-cta { font-size: 44px; }
+  .cf__band-item { font-size: 64px; }
+  .cf__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; }
 }
 @media (max-width: 809.98px) {
-  .cf__inner { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; }
-  .cf__links a, .cf__mail-cta { font-size: 32px; }
-  .cf__mail { min-height: 150px; }
-  .cf__mail-cta svg { width: 0.7em; height: 0.7em; }
-  .cf__mail-address { font-size: 14px; }
-  .cf__bottom { margin-top: 8px; font-size: 12px; }
+  .cf__band { padding: 16px 0; }
+  .cf__band-item { font-size: 44px; }
+  .cf__band-track { animation-duration: 20s; }
+  .cf__grid { gap: 28px 20px; padding-top: 36px; }
+  .cf__grid > div:first-child { grid-column: 1 / -1; } /* lange Mail-Adresse über die volle Breite */
+  .cf__link, .cf__text { font-size: 17px; }
+  .cf__sub { font-size: 14px; }
+  .cf__bottom { padding-top: 28px; font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .cf__band-track { animation: none; }
   .cf__reveal { opacity: 1; transform: none; transition: none; }
 }
 
