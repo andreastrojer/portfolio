@@ -6,7 +6,7 @@ import { lenis } from './smoothScroll'
 // Links: Profile & Lebenslauf · Rechts: Fläche zwischen zwei Linien, öffnet eine E-Mail
 // (kein eigenes Formular).
 // Erreichbar über den Menüpunkt „Kontakt“ und /#kontakt – alte Links auf /contact landen hier.
-const EMAIL = 'trojer.andi63@gmail.com'
+const EMAIL = 'andreas.trojer@gmail.com'
 const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Anfrage über andreastrojer.at')}`
 
 const LINKS = [
