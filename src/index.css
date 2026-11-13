@@ -495,29 +495,71 @@ main[data-page="detail"] [data-framer-name="Hero Section"] { background-color: #
   .nav-shell { transition: none !important; }
 }
 
-/* ───────── Footer = Kontakt (frühere Kontaktseite) ───────── */
-.c-footer { min-height: 0; padding: 120px 24px 28px; }
-.c-label {
-  position: relative; margin: 0 0 20px;
+/* ───────── Footer = Kontakt · Design wie „Kompetenzfelder“ (hell, zentriert, dunkelblaue Versalien) ───────── */
+.cf {
+  position: relative;
+  padding: 0 20px 28px;
+  background: #e4e7ed; color: #04004a;
+  font-family: "Geist", "Geist Placeholder", Inter, sans-serif;
+  text-align: center;
+}
+.cf__inner { padding: 72px 0 0; border-top: 1px solid rgba(16, 27, 33, 0.12); }
+.cf__label {
+  margin: 0 0 24px;
   font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.012em;
-  text-transform: uppercase; color: rgba(228, 231, 237, 0.55);
+  text-transform: uppercase; color: #8a8a8a;
 }
-/* Einblenden erst, wenn der Footer sichtbar wird */
-.c-footer:not(.is-in) .c-big,
-.c-footer:not(.is-in) .c-grid { animation-play-state: paused; }
-.c-footer .c-bottom {
-  margin-top: 112px; padding-top: 20px;
-  border-top: 1px solid rgba(228, 231, 237, 0.12);
-  align-items: center;
+.cf__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.cf__links a {
+  position: relative; display: inline-block;
+  font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.03em;
+  text-transform: uppercase; color: #04004a; text-decoration: none;
+  transition: opacity 300ms;
 }
-.c-bottom button {
+.cf__links a svg {
+  position: absolute; top: 0.12em; right: -0.55em;
+  width: 0.36em; height: 0.36em;
+  opacity: 0; transform: translate(-6px, 6px);
+  transition: opacity 250ms, transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .cf__links:hover a { opacity: 0.35; }
+  .cf__links a:hover { opacity: 1; }
+  .cf__links a:hover svg { opacity: 1; transform: none; }
+}
+.cf__form {
+  max-width: 640px; margin: 72px auto 0;
+  text-align: left;
+}
+.cf__form > div { max-width: none !important; }
+/* Kopfzeile „Kontaktformular / * Pflichtfeld“ ausblenden */
+.cf__form form > div:first-child { display: none !important; }
+.cf__bottom {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  margin-top: 96px; padding-top: 20px;
+  border-top: 1px solid rgba(16, 27, 33, 0.12);
+  font-size: 13px; color: #8a8a8a;
+}
+.cf__bottom button {
   padding: 0; border: 0; background: none; cursor: pointer;
   font: inherit; color: inherit; transition: color 200ms;
 }
-.c-bottom button:hover { color: #e4e7ed; }
+.cf__bottom button:hover { color: #04004a; }
+/* Einblenden beim Hineinscrollen */
+.cf__reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1); }
+.cf.is-in .cf__reveal { opacity: 1; transform: none; }
+.cf.is-in .cf__form.cf__reveal { transition-delay: 150ms; }
+@media (max-width: 1199.98px) {
+  .cf__links a { font-size: 44px; }
+}
 @media (max-width: 809.98px) {
-  .c-footer { padding: 88px 20px 24px; }
-  .c-footer .c-bottom { margin-top: 64px; }
+  .cf__inner { padding-top: 56px; }
+  .cf__links a { font-size: 32px; }
+  .cf__form { margin-top: 48px; }
+  .cf__bottom { margin-top: 64px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cf__reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* Kompetenzfelder: ohne Hintergrundbild, kompakter, Schrift dunkelblau wie die Überschriften */
