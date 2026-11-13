@@ -3,7 +3,7 @@ import { lenis } from './smoothScroll'
 
 // Footer = Kontakt (ersetzt die frühere Kontaktseite /contact und den Framer-Footer).
 // Gestaltung wie der Bereich „Kompetenzfelder“: hell, große dunkelblaue Versalien.
-// Links: Profile & Lebenslauf · Rechts: Fläche zwischen zwei schwarzen Linien, öffnet eine E-Mail
+// Links: Profile & Lebenslauf · Rechts: Fläche zwischen zwei Linien, öffnet eine E-Mail
 // (kein eigenes Formular).
 // Erreichbar über den Menüpunkt „Kontakt“ und /#kontakt – alte Links auf /contact landen hier.
 const EMAIL = 'trojer.andi63@gmail.com'
