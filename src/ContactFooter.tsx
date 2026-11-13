@@ -13,7 +13,7 @@ const LINKS = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andreas-trojer-7981a0377/' },
   { label: 'GitHub', href: 'https://github.com/andreastrojer' },
   { label: 'GitLab', href: 'https://gitlab.com/trojera' },
-  { label: 'Lebenslauf', href: '/Lebenslauf_Andreas_Trojer.pdf?v=20261031' },
+  { label: 'Lebenslauf', href: '/Lebenslauf_Andreas_Trojer.pdf?v=20261113' },
 ]
 
 const Arrow = () => (
